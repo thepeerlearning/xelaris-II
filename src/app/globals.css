@@ -41,3 +41,14 @@
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+.swiper-pagination-custom,
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  opacity: 1;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet-active {
+  background-color: var(--primary);
+}
