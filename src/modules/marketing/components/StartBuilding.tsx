@@ -70,7 +70,7 @@ const data: StudentProjectData[] = [
         <p className="text-white/70">
           Using Python and a basic machine learning model, she trained her
           program to recognize pet features and classify them within seconds.
-          This project is part of her early journey into AI, where she's
+          This project is part of her early journey into AI, where she&apos;s
           learning how technology can solve real-world problems.
         </p>
       </>

@@ -6,13 +6,20 @@ import Testimonial from "@/modules/marketing/components/Testimonial";
 import WhatMakesUsDifferent from "@/modules/marketing/components/what-makes-us-different";
 import { notFound } from "next/navigation";
 
-const SchoolPage = async ({ params }: { params: string }) => {
-  const slug = await params.slug;
+interface PageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
+
+const SchoolPage = async ({ params }: PageProps) => {
+  const { slug } = await params;
   const data = schoolData.find((item) => item.id === slug);
 
   if (!data) {
     return notFound();
   }
+
   return (
     <>
       <SchoolHero
@@ -21,7 +28,11 @@ const SchoolPage = async ({ params }: { params: string }) => {
         description={data.description}
       />
 
-      <SchoolFaq faqs={data.faqs} faqText={data.faqText} />
+      <SchoolFaq
+        faqs={data.faqs}
+        faqText={data.faqText}
+        image={data.faqImage}
+      />
       <StudentBuildings />
       <Testimonial />
       <WhatMakesUsDifferent />

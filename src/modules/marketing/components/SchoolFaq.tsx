@@ -7,22 +7,33 @@ import { useState } from "react";
 const SchoolFaq = ({
   faqs,
   faqText,
+  image,
 }: {
-  faqs: { question: string; answer: string }[];
+  faqs: { title: string; items: string[] }[];
   faqText: string;
+  image: string;
 }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [showAllFaqs, setShowAllFaqs] = useState(false);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const toggleShowAllFaqs = () => {
+    setShowAllFaqs(!showAllFaqs);
+  };
+
+  const initialFaqCount = 3;
+  const displayedFaqs = showAllFaqs ? faqs : faqs.slice(0, initialFaqCount);
+  const shouldShowReadMore = faqs.length > initialFaqCount;
+
   return (
     <section>
-      <Container className="py-20 flex lg:flex-row gap-4 lg:gap-10 flex-col max-lg:flex-col-reverse">
-        <div className="lg:w-1/2 w-full grow-0 max-md:max-h-[298px] h-full max-lg:max-h-[400px] overflow-hidden">
+      <Container className="py-20 flex lg:flex-row gap-4 lg:gap-10 flex-col max-lg:flex-col-reverse relative">
+        <div className="lg:w-1/2 w-full grow-0 max-md:max-h-[298px] h-full max-lg:max-h-[400px] overflow-hidden lg:sticky top-24">
           <Image
-            src="/assets/images/boy-seating.png"
+            src={image}
             alt="panel discussion"
             height={550.8}
             width={648}
@@ -42,14 +53,14 @@ const SchoolFaq = ({
             </div>
 
             <div className="space-y-4">
-              {faqs.map((faq, index) => (
+              {displayedFaqs.map((faq, index) => (
                 <div key={index} className="border-b border-[#FFFEFA]/20">
                   <button
                     onClick={() => toggleFAQ(index)}
                     className="w-full cursor-pointer flex justify-between items-center py-4 text-left font-semi-bold"
                   >
                     <h3 className="font-medium text-lg text-[#FFFEFA] pr-4">
-                      {faq.question}
+                      {faq.title}
                     </h3>
                     <svg
                       className={`w-5 h-5 text-primary transition-transform duration-200 ${
@@ -68,15 +79,29 @@ const SchoolFaq = ({
                       />
                     </svg>
                   </button>
+
                   {openIndex === index && (
                     <div className="pb-4 animate-fadeIn">
-                      <p className="text-white/70 text-sm leading-relaxed">
-                        {faq.answer}
-                      </p>
+                      <ul className="list-disc list-inside space-y-1 text-white/70 text-sm leading-relaxed">
+                        {faq.items.map((item, i) => (
+                          <li key={i}>{item}</li>
+                        ))}
+                      </ul>
                     </div>
                   )}
                 </div>
               ))}
+
+              {shouldShowReadMore && (
+                <div className="pt-4">
+                  <button
+                    onClick={toggleShowAllFaqs}
+                    className="text-primary text-sm font-medium hover:underline transition-all duration-200"
+                  >
+                    {showAllFaqs ? "Read Less" : "Read More"}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

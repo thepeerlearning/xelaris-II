@@ -1,0 +1,109 @@
+"use client";
+
+import Form from "@/components/form/Form";
+import FormField from "@/components/form/FormField";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+const schema = z.object({
+  parentName: z.string().min(1, "Parent name is required"),
+  childName: z.string().min(1, "Child name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(1, "Phone number is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+type InformationFormData = z.infer<typeof schema>;
+
+interface InformationStepProps {
+  formData: InformationFormData;
+  updateFormData: (data: InformationFormData) => void;
+  onNext: () => void;
+}
+
+export function InformationStep({
+  formData,
+  updateFormData,
+  onNext,
+}: InformationStepProps) {
+  const form = useForm<InformationFormData>({
+    resolver: zodResolver(schema),
+    defaultValues: formData,
+  });
+
+  const handleSubmit = form.handleSubmit((data) => {
+    updateFormData(data);
+    onNext();
+  });
+
+  return (
+    <Form {...form}>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="parentName"
+          label="Parent full name"
+          placeholder="Alexa Plex"
+        />
+
+        <FormField
+          control={form.control}
+          name="childName"
+          label="Child full name"
+          placeholder="Ryan Plex"
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          label="Email address"
+          type="email"
+          placeholder="alexaplex@gmail.co"
+        />
+
+        <FormField
+          control={form.control}
+          fieldType="phone"
+          name="phone"
+          label="Phone Number"
+          defaultCountry="US"
+          placeholder="+1 (415) 642-5372"
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          label="Password"
+          type="password"
+          placeholder="••••••••••••"
+        />
+
+        <div className="text-sm text-background">
+          By clicking &apos;Continue&apos;, you agree to Xelaris&apos;s{" "}
+          <Link href="#" className=" hover:underline font-semibold">
+            Privacy Policy
+          </Link>{" "}
+          and{" "}
+          <Link href="#" className="hover:underline font-semibold">
+            Terms Of Service
+          </Link>
+          .
+        </div>
+
+        <Button type="submit" className="w-full">
+          Continue
+        </Button>
+
+        <div className="text-center text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link href="/login" className="text-background hover:underline">
+            Login
+          </Link>
+        </div>
+      </form>
+    </Form>
+  );
+}

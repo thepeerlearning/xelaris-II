@@ -51,7 +51,7 @@ const Partners = () => {
 
           {/* Marquee Container */}
           <div className="relative overflow-hidden">
-            <div className="flex animate-marquee whitespace-nowrap gap-5">
+            <div className="flex animate-marquee whitespace-nowrap gap-10">
               {/* First set of logos */}
               {logos.map((logo, index) => (
                 <div

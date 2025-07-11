@@ -37,18 +37,6 @@ const navigationData = {
   },
 };
 
-// Mobile menu items
-const mobileMenuItems = [
-  { href: "/about-us", label: "About Xelaris" },
-  { href: "/contact-us", label: "Get in Touch" },
-  { href: "/Software", label: "Software Development" },
-  { href: "/ProductDesign", label: "Product Design" },
-  { href: "/ArtificialIntelligence", label: "Artificial Intelligence" },
-  { href: "/Web3Developer", label: "Web3 Developer" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/login", label: "Login" },
-];
-
 // Reusable Components
 const NavLink = ({
   href,
@@ -179,9 +167,113 @@ const DropdownMenu = ({
   );
 };
 
+// Mobile Dropdown Component
+const MobileDropdown = ({
+  menu,
+  items,
+  isOpen,
+  onToggle,
+  index,
+}: {
+  menu: string;
+  items: { href: string; label: string }[];
+  isOpen: boolean;
+  onToggle: () => void;
+  index: number;
+}) => {
+  const pathname = usePathname();
+  const hasActiveChild = items.some((item) => pathname === item.href);
+
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, x: -20 },
+        visible: (i: number) => ({
+          opacity: 1,
+          x: 0,
+          transition: {
+            delay: i * 0.1,
+            duration: 0.3,
+            ease: "easeOut",
+          },
+        }),
+      }}
+      initial="hidden"
+      animate="visible"
+      custom={index}
+    >
+      <div
+        onClick={onToggle}
+        className={`flex items-center justify-between py-2 cursor-pointer hover:text-gray-300 transition-colors duration-200 relative ${
+          hasActiveChild ? "text-yellow-400" : ""
+        }`}
+      >
+        <span>{navigationData[menu as keyof typeof navigationData].label}</span>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+        >
+          <ChevronDown size={16} />
+        </motion.div>
+        {hasActiveChild && (
+          <motion.div
+            className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 w-full"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          />
+        )}
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="ml-4 mt-2 space-y-2"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {items.map((item, itemIndex) => (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: itemIndex * 0.05, duration: 0.2 }}
+              >
+                <Link
+                  href={item.href}
+                  className={`block py-2 pl-4 hover:text-gray-300 transition-colors duration-200 relative border-l-2 border-gray-600 ${
+                    pathname === item.href
+                      ? "text-yellow-400 border-yellow-400"
+                      : ""
+                  }`}
+                >
+                  {item.label}
+                  {pathname === item.href && (
+                    <motion.div
+                      className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 w-full"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    />
+                  )}
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
+  const [mobileDropdowns, setMobileDropdowns] = useState<{
+    [key: string]: boolean;
+  }>({});
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -245,13 +337,105 @@ const Navbar = () => {
     setHoveredMenu(null);
   };
 
+  // Handle mobile dropdown toggle
+  const handleMobileDropdownToggle = (menu: string) => {
+    setMobileDropdowns((prev) => ({
+      ...prev,
+      [menu]: !prev[menu],
+    }));
+  };
+
   const handleNavClick = (event: React.MouseEvent<HTMLElement>) => {
     const target = (event.target as HTMLElement).closest("a");
 
     if (target) {
       // If a Link or <a> was clicked, then close the navigation
       setOpen(false);
+      setMobileDropdowns({});
     }
+  };
+
+  // Generate mobile menu items from navigation data
+  const generateMobileMenuItems = () => {
+    const items = [];
+    let index = 0;
+
+    // Add dropdown menus
+    Object.keys(navigationData).forEach((key) => {
+      const navItem = navigationData[key as keyof typeof navigationData];
+      if ("items" in navItem) {
+        items.push(
+          <MobileDropdown
+            key={key}
+            menu={key}
+            items={navItem.items}
+            isOpen={mobileDropdowns[key] || false}
+            onToggle={() => handleMobileDropdownToggle(key)}
+            index={index}
+          />
+        );
+        index++;
+      }
+    });
+
+    // Add pricing link
+    items.push(
+      <motion.div
+        key="pricing"
+        variants={mobileMenuItemVariants as any}
+        initial="hidden"
+        animate="visible"
+        custom={index}
+      >
+        <Link
+          href={navigationData.pricing.href!}
+          className={`block py-2 hover:text-gray-300 transition-colors duration-200 relative ${
+            pathname === navigationData.pricing.href ? "text-yellow-400" : ""
+          }`}
+        >
+          {navigationData.pricing.label}
+          {pathname === navigationData.pricing.href && (
+            <motion.div
+              className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 w-full"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            />
+          )}
+        </Link>
+      </motion.div>
+    );
+    index++;
+
+    // Add login link
+    items.push(
+      <motion.div
+        key="login"
+        variants={mobileMenuItemVariants as any}
+        initial="hidden"
+        animate="visible"
+        custom={index}
+      >
+        <Link
+          href="/login"
+          className={`block py-2 hover:text-gray-300 transition-colors duration-200 relative ${
+            pathname === "/login" ? "text-yellow-400" : ""
+          }`}
+        >
+          Login
+          {pathname === "/login" && (
+            <motion.div
+              className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 w-full"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            />
+          )}
+        </Link>
+      </motion.div>
+    );
+
+    return items;
   };
 
   return (
@@ -367,32 +551,7 @@ const Navbar = () => {
                 className="flex flex-col p-6 space-y-6 text-white text-lg h-full overflow-y-auto"
                 onClick={handleNavClick}
               >
-                {mobileMenuItems.map((item, index) => (
-                  <motion.div
-                    key={item.href}
-                    variants={mobileMenuItemVariants as any}
-                    initial="hidden"
-                    animate="visible"
-                    custom={index}
-                  >
-                    <Link
-                      href={item.href}
-                      className={`block py-2 hover:text-gray-300 transition-colors duration-200 relative ${
-                        pathname === item.href ? "text-yellow-400" : ""
-                      }`}
-                    >
-                      {item.label}
-                      {pathname === item.href && (
-                        <motion.div
-                          className="absolute bottom-0 left-0 h-0.5 bg-yellow-400 w-full"
-                          initial={{ scaleX: 0 }}
-                          animate={{ scaleX: 1 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                        />
-                      )}
-                    </Link>
-                  </motion.div>
-                ))}
+                {generateMobileMenuItems()}
               </nav>
             </motion.div>
           )}
