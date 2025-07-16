@@ -1,8 +1,9 @@
-import Footer from "@/modules/marketing/components/footer";
-import Navbar from "@/modules/marketing/components/navbar";
-import ScrollProgress from "@/modules/marketing/components/scroll-progress";
+import FloatingChat from "@/components/FloatingChat";
+import ScrollProgress from "@/components/scroll-progress";
 
 import { PropsWithChildren } from "react";
+import Footer from "./_components/footer";
+import Navbar from "./_components/navbar";
 
 const MarketingLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -11,6 +12,7 @@ const MarketingLayout = ({ children }: PropsWithChildren) => {
       <main className="flex-1">{children}</main>
       <Footer />
       <ScrollProgress />
+      <FloatingChat />
     </div>
   );
 };

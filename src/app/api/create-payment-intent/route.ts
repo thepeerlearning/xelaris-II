@@ -1,7 +1,22 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { SignUpData } from "@/modules/dashboard/types";
+import { env } from "@/config/env";
 import { NextRequest, NextResponse } from "next/server";
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+// Temporary SignUpData interface - will be moved to centralized types
+interface SignUpData {
+  parentName: string;
+  childName: string;
+  email: string;
+  password: string;
+  phone: string;
+  timezone: string;
+  childAge: string;
+  classDuration: string;
+  availableDay: string;
+  availableTime: string;
+}
+
+const stripe = require("stripe")(env.STRIPE_SECRET_KEY);
 
 export async function POST(request: NextRequest) {
   try {

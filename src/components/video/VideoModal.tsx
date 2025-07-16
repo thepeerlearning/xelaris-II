@@ -18,9 +18,10 @@ const VideoModal: React.FC<VideoModalProps> = ({
 
   useEffect(() => {
     if (isOpen && videoRef.current) {
-      console.log("Modal opened, starting video playback");
-      videoRef.current.play().catch((error) => {
-        console.log("Video autoplay failed:", error);
+      // Attempt to autoplay video when modal opens
+      videoRef.current.play().catch(() => {
+        // Autoplay failed - user will need to manually start video
+        // This is expected behavior in many browsers
       });
     }
   }, [isOpen]);
@@ -28,7 +29,6 @@ const VideoModal: React.FC<VideoModalProps> = ({
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
-        console.log("Escape key pressed, closing modal");
         onClose();
       }
     };
@@ -51,7 +51,6 @@ const VideoModal: React.FC<VideoModalProps> = ({
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === modalRef.current) {
-      console.log("Backdrop clicked, closing modal");
       onClose();
     }
   };
@@ -83,15 +82,15 @@ const VideoModal: React.FC<VideoModalProps> = ({
             src={videoUrl}
             controls
             autoPlay
-            className="w-full h-auto max-h-[80vh] object-contain"
-            onError={(e) => {
-              console.error("Video failed to load:", e);
+            className="w-full h-auto max-h-[50vh] lg:max-h-[80vh] object-contain"
+            onError={() => {
+              // Video failed to load - error handling could be added here
             }}
             onLoadStart={() => {
-              console.log("Video started loading");
+              // Video started loading
             }}
             onCanPlay={() => {
-              console.log("Video can start playing");
+              // Video can start playing
             }}
           >
             Your browser does not support the video tag.

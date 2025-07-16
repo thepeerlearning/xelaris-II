@@ -5,79 +5,79 @@ const TeamData = [
   {
     name: "Mia Liam",
     role: "Software Developer",
-    imageUrl: "/assets/images/people/Guadalupe.png",
+    imageUrl: "/assets/images/people/mia_liam.png",
   },
   {
     name: "Priya Mehta",
     role: "Scheduling Coordinator",
-    imageUrl: "/assets/images/people/Guadalupe (2).png",
+    imageUrl: "/assets/images/people/priya_mehta.png",
   },
   {
     name: "Sushi Uji",
     role: "Product Designer",
-    imageUrl: "/assets/images/people/Guadalupe (3).png",
+    imageUrl: "/assets/images/people/sushi_uji.png",
   },
   {
     name: "Casweeney",
     role: "Blockchain Engineer",
-    imageUrl: "/assets/images/people/Guadalupe (4).png",
+    imageUrl: "/assets/images/people/casweeney.png",
   },
   {
     name: "Emilia Zhang",
-    role: "AI/assets/images/people/ML",
-    imageUrl: "/assets/images/people/Guadalupe (5).png",
+    role: "AI/ML Engineer",
+    imageUrl: "/assets/images/people/emilia_zhang.png",
   },
   {
     name: "Amelia Yates",
     role: "Software Developer",
-    imageUrl: "/assets/images/people/Guadalupe (6).png",
+    imageUrl: "/assets/images/people/amelia_yates.png",
   },
   {
     name: "Jasmine Ryan",
     role: "Software Developer",
-    imageUrl: "/assets/images/people/Guadalupe (7).png",
+    imageUrl: "/assets/images/people/jasmine_ryan.png",
   },
   {
     name: "Aisha Abdulkadi",
     role: "Software Developer",
-    imageUrl: "/assets/images/people/Guadalupe (8).png",
+    imageUrl: "/assets/images/people/aisha_abdulkadi.png",
   },
   {
     name: "Daniela Reyes",
     role: "Software Developer",
-    imageUrl: "/assets/images/people/Guadalupe (9).png",
+    imageUrl: "/assets/images/people/daniela_reyes.png",
   },
   {
     name: "Malik Gwandu",
     role: "Product Designer",
-    imageUrl: "/assets/images/people/Guadalupe (10).png",
+    imageUrl: "/assets/images/people/malik_gwandu.png",
   },
   {
     name: "Sophie Patel",
     role: "Product Designer",
-    imageUrl: "/assets/images/people/Guadalupe (11).png",
+    imageUrl: "/assets/images/people/sophie_patel.png",
   },
   {
     name: "Eliana Luca",
-    role: "AI/assets/images/people/ML",
-    imageUrl: "/assets/images/people/Guadalupe (12).png",
+    role: "AI/ML Engineer",
+    imageUrl: "/assets/images/people/eliana_luca.png",
   },
   {
     name: "Sam Eseyin",
     role: "Product Designer",
-    imageUrl: "/assets/images/people/Guadalupe (13).png",
+    imageUrl: "/assets/images/people/sam_eseyin.png",
   },
   {
     name: "Jordan Smith",
     role: "Software Developer",
-    imageUrl: "/assets/images/people/Guadalupe (12).png",
+    imageUrl: "/assets/images/people/jordan_smith.png",
   },
 ];
 
 const AboutUsPage = () => {
   return (
     <section className="overflow-hidden pb-[90px]">
-      <div className="h-[488px] p-[64px] gap-[20px] w-full flex flex-col items-center justify-center bg-[url('/assets/images/aboutBg.png')] bg-cover bg-no-repeat bg-center md:min-h-[500px] lg:min-h-[810px] px-[20px]">
+      <div className="h-[488px] p-[64px] gap-[20px] w-full flex flex-col items-center justify-center bg-[url('/assets/images/aboutBg.png')] bg-cover bg-no-repeat bg-center md:min-h-[500px] lg:min-h-[650px] px-[20px]">
         <div className="flex flex-col gap-4 items-center">
           <h1 className="text-2xl md:text-4xl lg:text-5xl">
             About{" "}
@@ -85,12 +85,12 @@ const AboutUsPage = () => {
               Xelaris
             </span>
           </h1>
-          <p className="max-w-2xl text-center text-sm lg:text-xl">
+          <p className="max-w-2xl text-center  lg:text-xl">
             Founded by former educators from Synthesis and Springboard, Xelaris
             is led by a team deeply passionate about technology, education, and
             the intersection of both.
           </p>
-          <p className="max-w-2xl text-center text-sm lg:text-xl">
+          <p className="max-w-2xl text-center lg:text-xl">
             We are educators, designers, and engineers who believe in pushing
             boundaries to create engaging, innovative, and meaningful learning
             experiences tailored specifically for kids and teens.

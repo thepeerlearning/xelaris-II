@@ -1,4 +1,4 @@
-import SignUpForm from "@/modules/dashboard/components/signup";
+import SignUpForm from "@/app/(app)/(auth)/(booking)/signup/_components";
 
 const SignUpPage = () => {
   return <SignUpForm />;

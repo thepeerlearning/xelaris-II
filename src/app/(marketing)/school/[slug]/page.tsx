@@ -1,9 +1,9 @@
+import SchoolFaq from "@/components/SchoolFaq";
+import SchoolHero from "@/components/SchoolHero";
+import StudentBuildings from "@/components/StartBuilding";
+import Testimonial from "@/components/Testimonial";
+import WhatMakesUsDifferent from "@/components/what-makes-us-different";
 import { schoolData } from "@/data";
-import SchoolFaq from "@/modules/marketing/components/SchoolFaq";
-import SchoolHero from "@/modules/marketing/components/SchoolHero";
-import StudentBuildings from "@/modules/marketing/components/StartBuilding";
-import Testimonial from "@/modules/marketing/components/Testimonial";
-import WhatMakesUsDifferent from "@/modules/marketing/components/what-makes-us-different";
 import { notFound } from "next/navigation";
 
 interface PageProps {

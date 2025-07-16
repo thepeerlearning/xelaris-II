@@ -42,9 +42,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
             fill
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             onError={(e) => {
-              console.log(
-                "Thumbnail failed to load, using gradient background"
-              );
+              // Hide image if thumbnail fails to load, gradient background will show
               e.currentTarget.style.display = "none";
             }}
           />

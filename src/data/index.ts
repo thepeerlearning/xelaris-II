@@ -198,7 +198,7 @@ By the end, they’ll be able to build fully functional web apps. `,
     title: "School Of Artificial Intelligence",
     videoUrl:
       "https://res.cloudinary.com/djeoaylbe/video/upload/v1751490636/4927934_Boy_Internet_3840x2160_wiqdad.mp4",
-    prerequisite: "No prerequisite",
+    prerequisite: "Has prerequisite",
     level: "Ages 13-17",
     imageUrl: "/assets/images/school/ai.png",
     route: "/school/artificial-intelligence",
@@ -305,7 +305,7 @@ By the end, they’ll be able to build fully functional web apps. `,
   {
     id: "blockchain-technology",
     title: "School Of Blockchain Technology",
-    prerequisite: "No prerequisite",
+    prerequisite: "Has prerequisite",
     level: "Ages 14-17",
     faqs: [
       {
