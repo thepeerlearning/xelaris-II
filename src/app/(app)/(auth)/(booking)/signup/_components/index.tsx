@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { InformationStep } from "./InformationStep";
 import { PaymentStep } from "./PaymentStep";

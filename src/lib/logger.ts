@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Centralized logging system for the application
  * Provides different log levels and environment-aware logging
