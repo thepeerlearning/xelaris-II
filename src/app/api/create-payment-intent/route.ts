@@ -1,28 +1,28 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { env } from "@/config/env";
-import { NextRequest, NextResponse } from "next/server";
+import { env } from "@/config/env"
+import { NextRequest, NextResponse } from "next/server"
 
 // Temporary SignUpData interface - will be moved to centralized types
 interface SignUpData {
-  parentName: string;
-  childName: string;
-  email: string;
-  password: string;
-  phone: string;
-  timezone: string;
-  childAge: string;
-  classDuration: string;
-  availableDay: string;
-  availableTime: string;
+  parentName: string
+  childName: string
+  email: string
+  password: string
+  phone: string
+  timezone: string
+  childAge: string
+  classDuration: string
+  availableDay: string
+  availableTime: string
 }
 
-const stripe = require("stripe")(env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
 
 export async function POST(request: NextRequest) {
   try {
-    const { amount, data } = await request.json();
+    const { amount, data } = await request.json()
 
-    const formData = data as SignUpData;
+    const formData = data as SignUpData
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
@@ -30,15 +30,15 @@ export async function POST(request: NextRequest) {
       receipt_email: formData.email,
       automatic_payment_methods: { enabled: true },
       metadata: { ...formData },
-    });
+    })
 
-    return NextResponse.json({ clientSecret: paymentIntent.client_secret });
+    return NextResponse.json({ clientSecret: paymentIntent.client_secret })
   } catch (error) {
-    console.error("Internal Error:", error);
+    console.error("Internal Error:", error)
 
     return NextResponse.json(
       { error: `Internal Server Error: ${error}` },
       { status: 500 }
-    );
+    )
   }
 }
