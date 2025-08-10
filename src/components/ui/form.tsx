@@ -15,12 +15,13 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
+import { ErrorAlertIcon } from "../svgs"
 
 const Form = FormProvider
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = {
   name: TName
 }
@@ -31,7 +32,7 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
@@ -72,7 +73,15 @@ type FormItemContextValue = {
 const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue
 )
+function ErrorMessage({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-[#E23353] font-inter font-bold text-[14px]/[22px] tracking-normal flex items-center gap-[5px] -mt-1">
+      <ErrorAlertIcon />
 
+      {children}
+    </div>
+  )
+}
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   const id = React.useId()
 
@@ -97,7 +106,10 @@ function FormLabel({
     <Label
       data-slot="form-label"
       data-error={!!error}
-      className={cn("data-[error=true]:text-destructive", className)}
+      className={cn(
+        "data-[error=true]:text-destructive text-gray-700 font-medium text-sm",
+        className
+      )}
       htmlFor={formItemId}
       {...props}
     />
@@ -164,4 +176,5 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  ErrorMessage,
 }

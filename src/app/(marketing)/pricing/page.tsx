@@ -1,7 +1,6 @@
-import Container from "@/components/container";
-import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
-import Link from "next/link";
+import Container from "@/components/container"
+import { Check } from "lucide-react"
+import BookClassButton from "../_components/bookClass"
 
 const PricingData = [
   {
@@ -43,7 +42,7 @@ const PricingData = [
       "Course certification.",
     ],
   },
-];
+]
 
 const PricingPage = () => {
   return (
@@ -67,9 +66,7 @@ const PricingPage = () => {
                   {price} <span className="text-sm">per/{timeframe}</span>
                 </h1>
 
-                <Button type="button" className="w-full" asChild>
-                  <Link href="/signup">Book A Free Class</Link>
-                </Button>
+                <BookClassButton />
               </div>
 
               <hr />
@@ -90,7 +87,7 @@ const PricingPage = () => {
         </div>
       </Container>
     </section>
-  );
-};
+  )
+}
 
-export default PricingPage;
+export default PricingPage

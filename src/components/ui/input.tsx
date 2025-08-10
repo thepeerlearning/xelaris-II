@@ -1,19 +1,35 @@
-import * as React from "react";
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
-import { cn } from "@/lib/utils";
+type Props = React.InputHTMLAttributes<HTMLInputElement>
 
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
-  return (
-    <input
-      type={type}
-      data-slot="input"
-      className={cn(
-        "flex  text-black  w-full min-w-0 h-10 border border-gray-100 outline-0 focus:outline-0  bg-white px-3 py-1 text-base  transition-colors outline-none placeholder:text-[#BDC1CA] focus:border-background disabled:cursor-not-allowed disabled:opacity-50 ",
-        className
-      )}
-      {...props}
-    />
-  );
-}
+const Input = React.forwardRef<HTMLInputElement, Props>(
+  ({ className, type = "text", value, defaultValue, ...rest }, ref) => {
+    const isControlled = value !== undefined
 
-export { Input };
+    // Strip value/defaultValue from rest so we control what gets passed
+    const { ...props } = rest
+
+    return (
+      <input
+        ref={ref}
+        type={type}
+        data-slot="input"
+        className={cn(
+          "flex h-10 w-full border border-gray-100 bg-white px-3 py-1 text-base text-black",
+          "transition-colors placeholder:text-[#BDC1CA]",
+          "focus-visible:outline-none focus:outline-0 focus-visible:border-background",
+          "disabled:cursor-not-allowed disabled:opacity-50",
+          className
+        )}
+        {...(isControlled
+          ? { value: value ?? "" } // never undefined
+          : { defaultValue: defaultValue ?? "" })}
+        {...props}
+      />
+    )
+  }
+)
+
+Input.displayName = "Input"
+export { Input }

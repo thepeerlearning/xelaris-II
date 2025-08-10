@@ -1,8 +1,7 @@
-"use client";
+"use client"
 
-import Container from "@/components/container";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import BookClassButton from "@/app/(marketing)/_components/bookClass"
+import Container from "@/components/container"
 
 const features = [
   {
@@ -35,7 +34,7 @@ const features = [
     description:
       "We track not just technical proficiency but the ability to decompose problems, recognize patterns, and come up with solutions. Our assessment framework provides parents with visibility into their child's growth.",
   },
-];
+]
 
 const WhatMakesUsDifferent = () => {
   return (
@@ -50,12 +49,10 @@ const WhatMakesUsDifferent = () => {
               </span>
             </h2>
             <p className="font-sans font-normal text-[16px] leading-[22.4px] tracking-normal text-[#F2F0EB] md:text-[22px] md:leading-[30px]">
-              This isn’t school. It’s a launchpad for the next{" "}
+              This isn&apos;t school. It&apos;s a launchpad for the next{" "}
               <br className="max-lg:hidden" /> generation of innovators.
             </p>
-            <Button asChild>
-              <Link href="/signup">Book A Free Class</Link>
-            </Button>
+            <BookClassButton />
           </div>
 
           <div className="flex mt-[67px] gap-[35.5px]">
@@ -94,7 +91,7 @@ const WhatMakesUsDifferent = () => {
         </div>
       </section>
     </Container>
-  );
-};
+  )
+}
 
-export default WhatMakesUsDifferent;
+export default WhatMakesUsDifferent

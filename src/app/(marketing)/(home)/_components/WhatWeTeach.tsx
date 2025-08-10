@@ -1,24 +1,24 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 import {
   Autoplay,
   EffectCoverflow,
   Navigation,
   Pagination,
-} from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+} from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/react"
 
-import Container from "@/components/container";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
+import Container from "@/components/container"
+import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
-import { schoolData } from "@/data";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { schoolData } from "@/data"
+import "swiper/css"
+import "swiper/css/effect-coverflow"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import BookClassButton from "../../_components/bookClass"
 
 const WhatWeTeach = () => {
   return (
@@ -100,9 +100,7 @@ const WhatWeTeach = () => {
 
                   {/* Action Button */}
                   <div className="p-4 border-t border-white  bg-background">
-                    <Button asChild className="w-full">
-                      <Link href="/signup">Book A Free Class</Link>
-                    </Button>
+                    <BookClassButton />
                   </div>
                 </div>
               </SwiperSlide>
@@ -111,7 +109,7 @@ const WhatWeTeach = () => {
         </motion.div>
       </Container>
     </section>
-  );
-};
+  )
+}
 
-export default WhatWeTeach;
+export default WhatWeTeach

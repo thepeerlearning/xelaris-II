@@ -1,69 +1,63 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { cn } from "@/lib/utils";
-import { Eye, EyeOff, TriangleAlert } from "lucide-react";
-import { ComponentProps, ReactNode, useState } from "react";
-import {
-  Control,
-  FieldPath,
-  FieldValues,
-  useController,
-} from "react-hook-form";
-import { Input } from "../ui/input";
-import { PhoneInput } from "../ui/phone-input";
+import { cn } from "@/lib/utils"
+import { Eye, EyeOff, TriangleAlert } from "lucide-react"
+import { ComponentProps, ReactNode, useState } from "react"
+import { Control, FieldPath, FieldValues, useController } from "react-hook-form"
+import { Input } from "../ui/input"
+import { PhoneInput } from "../ui/phone-input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "../ui/select"
 
 interface SelectOptions {
-  value: string;
-  label: string;
-  disabled?: boolean;
+  value: string
+  label: string
+  disabled?: boolean
 }
 
 interface SharedFormFieldProps<T extends FieldValues = FieldValues> {
-  control: Control<T>;
-  name: FieldPath<T>;
-  label?: string;
-  containerClassName?: string;
-  errorClassName?: string;
-  showError?: boolean;
-  required?: boolean;
-  className?: string;
-  renderLabelRight?: ReactNode;
-  disabled?: boolean;
+  control: Control<T>
+  name: FieldPath<T>
+  label?: string
+  containerClassName?: string
+  errorClassName?: string
+  showError?: boolean
+  required?: boolean
+  className?: string
+  renderLabelRight?: ReactNode
+  disabled?: boolean
 }
 
 type InputFieldProps<T extends FieldValues> = SharedFormFieldProps<T> & {
-  fieldType?: "input";
-  type?: ComponentProps<typeof Input>["type"];
-  placeholder?: string;
-  autoComplete?: string;
-  options?: never; // explicitly disallow
-};
+  fieldType?: "input"
+  type?: ComponentProps<typeof Input>["type"]
+  placeholder?: string
+  autoComplete?: string
+  options?: never // explicitly disallow
+}
 
 type SelectFieldProps<T extends FieldValues> = SharedFormFieldProps<T> & {
-  fieldType: "select";
-  options: SelectOptions[];
-  placeholder?: string;
-  type?: never;
-};
+  fieldType: "select"
+  options: SelectOptions[]
+  placeholder?: string
+  type?: never
+}
 
 type PhoneFieldProps<T extends FieldValues> = SharedFormFieldProps<T> & {
-  fieldType: "phone";
-  options?: never;
-  type?: never;
-  placeholder?: string;
-  defaultCountry?: ComponentProps<typeof PhoneInput>["defaultCountry"];
-};
+  fieldType: "phone"
+  options?: never
+  type?: never
+  placeholder?: string
+  defaultCountry?: ComponentProps<typeof PhoneInput>["defaultCountry"]
+}
 
 type FormFieldProps<T extends FieldValues> =
   | InputFieldProps<T>
   | SelectFieldProps<T>
-  | PhoneFieldProps<T>;
+  | PhoneFieldProps<T>
 
 const FormField = <T extends FieldValues>({
   name,
@@ -82,15 +76,15 @@ const FormField = <T extends FieldValues>({
   const {
     field: { value, onBlur, onChange, ref },
     fieldState: { error },
-  } = useController({ name });
+  } = useController({ name })
 
-  const [showPassword, setShowPassword] = useState(false);
-  const isPasswordField = type === "password";
+  const [showPassword, setShowPassword] = useState(false)
+  const isPasswordField = type === "password"
   const inputType = isPasswordField
     ? showPassword
       ? "text"
       : "password"
-    : type;
+    : type
 
   const renderField = () => {
     switch (fieldType) {
@@ -126,7 +120,7 @@ const FormField = <T extends FieldValues>({
               </button>
             )}
           </div>
-        );
+        )
       case "select":
         return (
           <Select value={value as any} onValueChange={onChange} {...props}>
@@ -151,7 +145,7 @@ const FormField = <T extends FieldValues>({
               ))}
             </SelectContent>
           </Select>
-        );
+        )
       case "phone":
         return (
           <PhoneInput
@@ -162,11 +156,11 @@ const FormField = <T extends FieldValues>({
             className={className}
             {...props}
           />
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className={cn("space-y-2 group", containerClassName)}>
@@ -192,7 +186,7 @@ const FormField = <T extends FieldValues>({
         </p>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default FormField;
+export default FormField

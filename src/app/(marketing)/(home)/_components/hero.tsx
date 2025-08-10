@@ -1,7 +1,8 @@
-import Container from "@/components/container";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import HeroVideoPlayer from "../../../../components/HeroVideoPlayer";
+import Container from "@/components/container"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import HeroVideoPlayer from "../../../../components/HeroVideoPlayer"
+import BookClassButton from "../../_components/bookClass"
 
 const HomeHero = () => {
   return (
@@ -61,10 +62,8 @@ const HomeHero = () => {
               </span>
             </p>
             <div className="flex gap-2">
-              <Button asChild>
-                <Link href="/signup">Book A Free Class</Link>
-              </Button>
-              <Link href="/">
+              <BookClassButton />
+              <Link href="/signup">
                 <Button variant="outline">Sign Up</Button>
               </Link>
             </div>
@@ -73,7 +72,7 @@ const HomeHero = () => {
         <HeroVideoPlayer src="https://res.cloudinary.com/djeoaylbe/video/upload/v1751490636/4927934_Boy_Internet_3840x2160_wiqdad.mp4" />
       </Container>
     </section>
-  );
-};
+  )
+}
 
-export default HomeHero;
+export default HomeHero

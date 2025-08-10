@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
+"use client"
 
-import Container from "@/components/container";
-import { Button } from "@/components/ui/button";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import Container from "@/components/container"
+import { Button } from "@/components/ui/button"
+import { AnimatePresence, motion } from "framer-motion"
+import { ArrowUpRight, ChevronDown } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import React, { useEffect, useState } from "react"
+import BookClassButton from "./bookClass"
 
 // Navigation data structure
 const navigationData = {
@@ -35,7 +35,7 @@ const navigationData = {
     label: "Pricing",
     href: "/pricing",
   },
-};
+}
 
 // Reusable Components
 const NavLink = ({
@@ -44,14 +44,14 @@ const NavLink = ({
   isActive,
   className = "",
 }: {
-  href: string;
-  children: React.ReactNode;
-  isActive: boolean;
-  className?: string;
+  href: string
+  children: React.ReactNode
+  isActive: boolean
+  className?: string
 }) => (
   <Link
     href={href}
-    className={`font-inter font-normal text-[15.88px] leading-[24px] tracking-normal text-white font-sans hover:text-gray-300 transition-all duration-200 relative group ${className}`}
+    className={`font-inter font-normal text-[15.88px] leading-[24px] tracking-normal text-white hover:text-gray-300 transition-all duration-200 relative group ${className}`}
   >
     {children}
     <motion.div
@@ -63,7 +63,7 @@ const NavLink = ({
       style={{ width: "100%" }}
     />
   </Link>
-);
+)
 
 const DropdownMenu = ({
   menu,
@@ -72,14 +72,14 @@ const DropdownMenu = ({
   onMouseEnter,
   onMouseLeave,
 }: {
-  menu: string;
-  items: { href: string; label: string }[];
-  isOpen: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  menu: string
+  items: { href: string; label: string }[]
+  isOpen: boolean
+  onMouseEnter: () => void
+  onMouseLeave: () => void
 }) => {
-  const pathname = usePathname();
-  const hasActiveChild = items.some((item) => pathname === item.href);
+  const pathname = usePathname()
+  const hasActiveChild = items.some((item) => pathname === item.href)
 
   return (
     <li
@@ -87,7 +87,7 @@ const DropdownMenu = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="font-inter font-normal text-[15.88px] leading-[24px] tracking-normal text-white font-sans cursor-pointer hover:text-gray-300 transition-all duration-200 relative group flex items-center gap-1">
+      <div className="font-inter font-normal text-[15.88px] leading-[24px] tracking-normal text-white cursor-pointer hover:text-gray-300 transition-all duration-200 relative group flex items-center gap-1">
         {navigationData[menu as keyof typeof navigationData].label}
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
@@ -164,8 +164,8 @@ const DropdownMenu = ({
         )}
       </AnimatePresence>
     </li>
-  );
-};
+  )
+}
 
 // Mobile Dropdown Component
 const MobileDropdown = ({
@@ -175,14 +175,14 @@ const MobileDropdown = ({
   onToggle,
   index,
 }: {
-  menu: string;
-  items: { href: string; label: string }[];
-  isOpen: boolean;
-  onToggle: () => void;
-  index: number;
+  menu: string
+  items: { href: string; label: string }[]
+  isOpen: boolean
+  onToggle: () => void
+  index: number
 }) => {
-  const pathname = usePathname();
-  const hasActiveChild = items.some((item) => pathname === item.href);
+  const pathname = usePathname()
+  const hasActiveChild = items.some((item) => pathname === item.href)
 
   return (
     <motion.div
@@ -263,27 +263,27 @@ const MobileDropdown = ({
         )}
       </AnimatePresence>
     </motion.div>
-  );
-};
+  )
+}
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
-  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
+  const [open, setOpen] = useState(false)
+  const [hoveredMenu, setHoveredMenu] = useState<string | null>(null)
   const [mobileDropdowns, setMobileDropdowns] = useState<{
-    [key: string]: boolean;
-  }>({});
-  const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
+    [key: string]: boolean
+  }>({})
+  const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+      setIsScrolled(window.scrollY > 20)
+    }
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   // Animation variants
   const mobileMenuVariants = {
@@ -307,7 +307,7 @@ const Navbar = () => {
         ease: "easeIn",
       },
     },
-  };
+  }
 
   const mobileMenuItemVariants = {
     hidden: {
@@ -323,44 +323,44 @@ const Navbar = () => {
         ease: "easeOut",
       },
     }),
-  };
+  }
 
   // Handles mouse entering a menu link or its dropdown
   const handleMouseEnter = (menu: string) => {
-    setHoveredMenu(menu);
-  };
+    setHoveredMenu(menu)
+  }
 
   // Handles mouse leaving both link and dropdown area
   const handleMouseLeave = () => {
-    setHoveredMenu(null);
-  };
+    setHoveredMenu(null)
+  }
 
   // Handle mobile dropdown toggle
   const handleMobileDropdownToggle = (menu: string) => {
     setMobileDropdowns((prev) => ({
       ...prev,
       [menu]: !prev[menu],
-    }));
-  };
+    }))
+  }
 
   const handleNavClick = (event: React.MouseEvent<HTMLElement>) => {
-    const target = (event.target as HTMLElement).closest("a");
+    const target = (event.target as HTMLElement).closest("a")
 
     if (target) {
       // If a Link or <a> was clicked, then close the navigation
-      setOpen(false);
-      setMobileDropdowns({});
+      setOpen(false)
+      setMobileDropdowns({})
     }
-  };
+  }
 
   // Generate mobile menu items from navigation data
   const generateMobileMenuItems = () => {
-    const items = [];
-    let index = 0;
+    const items = []
+    let index = 0
 
     // Add dropdown menus
     Object.keys(navigationData).forEach((key) => {
-      const navItem = navigationData[key as keyof typeof navigationData];
+      const navItem = navigationData[key as keyof typeof navigationData]
       if ("items" in navItem) {
         items.push(
           <MobileDropdown
@@ -371,10 +371,10 @@ const Navbar = () => {
             onToggle={() => handleMobileDropdownToggle(key)}
             index={index}
           />
-        );
-        index++;
+        )
+        index++
       }
-    });
+    })
 
     // Add pricing link
     items.push(
@@ -402,8 +402,8 @@ const Navbar = () => {
           )}
         </Link>
       </motion.div>
-    );
-    index++;
+    )
+    index++
 
     // Add login link
     items.push(
@@ -431,10 +431,10 @@ const Navbar = () => {
           )}
         </Link>
       </motion.div>
-    );
+    )
 
-    return items;
-  };
+    return items
+  }
 
   return (
     <header
@@ -491,16 +491,12 @@ const Navbar = () => {
               Login <ArrowUpRight />
             </Link>
           </Button>
-          <Button asChild>
-            <Link href="/signup">Book A Free Class</Link>
-          </Button>
+          <BookClassButton />
         </div>
 
         {/* Hamburger button */}
         <div className="flex gap-2 md:hidden">
-          <Button asChild>
-            <Link href="/signup">Book A Free Class</Link>
-          </Button>
+          <BookClassButton />
           <motion.button
             aria-label="Toggle menu"
             onClick={() => setOpen(!open)}
@@ -556,7 +552,7 @@ const Navbar = () => {
         </AnimatePresence>
       </Container>
     </header>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

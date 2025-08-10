@@ -1,12 +1,15 @@
-"use client";
+"use client"
 
-import Form from "@/components/form/Form";
-import FormField from "@/components/form/FormField";
-import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
+import Form from "@/components/form/Form"
+import FormField from "@/components/form/FormField"
+import { Button } from "@/components/ui/button"
+import { signup, updateUserData } from "@/lib/redux"
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
 
 const schema = z.object({
   parentName: z.string().min(1, "Parent name is required"),
@@ -14,30 +17,60 @@ const schema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z.string().min(1, "Phone number is required"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-});
+})
 
-type InformationFormData = z.infer<typeof schema>;
+type InformationFormData = z.infer<typeof schema>
 
 interface InformationStepProps {
-  formData: InformationFormData;
-  updateFormData: (data: InformationFormData) => void;
-  onNext: () => void;
+  formData: InformationFormData
+  updateFormData: (data: InformationFormData) => void
+  onNext: () => void
 }
 
 export function InformationStep({
-  formData,
+  // formData,
   updateFormData,
   onNext,
 }: InformationStepProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { userData }: any = useAppSelector((state) => state.signup)
+  const dispatch = useAppDispatch()
+
   const form = useForm<InformationFormData>({
     resolver: zodResolver(schema),
-    defaultValues: formData,
-  });
+    // defaultValues: formData,
+    defaultValues: {
+      parentName: userData?.parent_full_name ?? "",
+      childName: userData?.child_full_name ?? "",
+      email: userData?.email ?? "",
+      password: userData?.password ?? "",
+      phone: userData?.phone ?? "",
+    },
+  })
 
   const handleSubmit = form.handleSubmit((data) => {
-    updateFormData(data);
-    onNext();
-  });
+    updateFormData(data)
+    console.log("data", data)
+    const inputData = {
+      child_full_name: data?.childName,
+      parent_full_name: data?.parentName,
+      email: data?.email?.trim(),
+      username: data?.childName.split(" ")?.[0]?.trim(),
+      password: data?.password?.trim(),
+      phone: data?.phone,
+    }
+    setIsSubmitting(true)
+    dispatch(signup({ inputData }))
+      .unwrap()
+      .then(() => {
+        dispatch(updateUserData({ data: inputData }))
+        setIsSubmitting(false)
+        onNext()
+      })
+      .catch(() => {
+        setIsSubmitting(false)
+      })
+  })
 
   return (
     <Form {...form}>
@@ -94,7 +127,7 @@ export function InformationStep({
         </div>
 
         <Button type="submit" className="w-full">
-          Continue
+          {isSubmitting ? "Processing..." : "Continue"}
         </Button>
 
         <div className="text-center text-sm text-gray-600">
@@ -105,5 +138,5 @@ export function InformationStep({
         </div>
       </form>
     </Form>
-  );
+  )
 }

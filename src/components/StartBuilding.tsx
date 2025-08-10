@@ -1,17 +1,16 @@
-import Container from "@/components/container";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import BookClassButton from "@/app/(marketing)/_components/bookClass"
+import Container from "@/components/container"
+import Image from "next/image"
+import React from "react"
 
 interface StudentProjectData {
-  index: string;
-  name: string;
-  bgColor: string;
-  label1: string;
-  label2: string;
-  text: React.ReactNode;
-  imageUrl: string;
+  index: string
+  name: string
+  bgColor: string
+  label1: string
+  label2: string
+  text: React.ReactNode
+  imageUrl: string
 }
 
 const data: StudentProjectData[] = [
@@ -199,10 +198,10 @@ const data: StudentProjectData[] = [
       </>
     ),
   },
-];
+]
 
 const StudentProject = ({ project }: { project: StudentProjectData }) => {
-  const { name, bgColor, label1, label2, text, imageUrl } = project;
+  const { name, bgColor, label1, label2, text, imageUrl } = project
 
   return (
     <section className="pb-10 lg:pb-[144px] md:pb-[216px] border-t border-[#FFFEFA80] pt-4 w-full bg-background sticky top-20">
@@ -239,9 +238,7 @@ const StudentProject = ({ project }: { project: StudentProjectData }) => {
               </p>
 
               <div className="mt-8">
-                <Button variant="outline" asChild>
-                  <Link href="/signup">Book A Free Class</Link>
-                </Button>
+                <BookClassButton />
               </div>
             </div>
           </div>
@@ -259,8 +256,8 @@ const StudentProject = ({ project }: { project: StudentProjectData }) => {
         </div>
       </Container>
     </section>
-  );
-};
+  )
+}
 
 const StudentBuildings = () => {
   return (
@@ -291,7 +288,7 @@ const StudentBuildings = () => {
         <section className="sticky w-full bg-transparent h-[300px] max-lg:hidden"></section>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default StudentBuildings;
+export default StudentBuildings

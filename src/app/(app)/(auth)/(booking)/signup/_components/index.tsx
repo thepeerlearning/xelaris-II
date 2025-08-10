@@ -1,13 +1,13 @@
-"use client";
-import { useState } from "react";
-import { InformationStep } from "./InformationStep";
-import { PaymentStep } from "./PaymentStep";
-import { ProgressIndicator } from "./ProgressIndicator";
-import { SchedulingStep } from "./SchedulingStep";
-import { SignUpData } from "./type";
+"use client"
+import { useState } from "react"
+import { InformationStep } from "./InformationStep"
+import { PaymentStep } from "./PaymentStep"
+import { ProgressIndicator } from "./ProgressIndicator"
+import { SchedulingStep } from "./SchedulingStep"
+import { SignUpData } from "./type"
 
 const SignUpForm = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<SignUpData>({
     parentName: "",
     childName: "",
@@ -17,25 +17,26 @@ const SignUpForm = () => {
     timezone: "",
     childAge: "",
     classDuration: "",
+    amount: "",
     availableDay: "",
     availableTime: "",
-  });
+  })
 
   const handleNext = () => {
-    setCurrentStep((prev) => prev + 1);
-  };
+    setCurrentStep((prev) => prev + 1)
+  }
 
   const handleBack = () => {
-    setCurrentStep((prev) => prev - 1);
-  };
+    setCurrentStep((prev) => prev - 1)
+  }
   const handlePickStep = (index: number) => {
-    if (index > currentStep) return;
-    setCurrentStep(index);
-  };
+    if (index > currentStep) return
+    setCurrentStep(index)
+  }
 
   const updateFormData = (data: Partial<typeof formData>) => {
-    setFormData((prev) => ({ ...prev, ...data }));
-  };
+    setFormData((prev) => ({ ...prev, ...data }))
+  }
 
   const renderStep = () => {
     switch (currentStep) {
@@ -46,22 +47,21 @@ const SignUpForm = () => {
             updateFormData={updateFormData}
             onNext={handleNext}
           />
-        );
+        )
       case 2:
         return (
           <SchedulingStep
-            formData={formData}
             updateFormData={updateFormData}
             onNext={handleNext}
             onBack={handleBack}
           />
-        );
+        )
       case 3:
-        return <PaymentStep formData={formData} />;
+        return <PaymentStep formData={formData} />
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <>
@@ -76,7 +76,7 @@ const SignUpForm = () => {
 
       {renderStep()}
     </>
-  );
-};
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm

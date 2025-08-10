@@ -18,22 +18,6 @@ interface EnvironmentConfig {
  * Throws an error if any required variables are missing
  */
 function validateEnvironment(): EnvironmentConfig {
-  const requiredEnvVars = [
-    "STRIPE_SECRET_KEY",
-    "NEXT_PUBLIC_STRIPE_PUBLIC_KEY",
-    "NEXT_PUBLIC_APP_URL",
-  ]
-
-  const missingVars = requiredEnvVars.filter((varName) => !process.env[varName])
-
-  if (missingVars.length > 0) {
-    throw new Error(
-      `Missing required environment variables: ${missingVars.join(", ")}\n` +
-        "Please check your .env file and ensure all required variables are set.\n" +
-        "See .env.example for reference."
-    )
-  }
-
   return {
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY!,
     NEXT_PUBLIC_STRIPE_PUBLIC_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!,

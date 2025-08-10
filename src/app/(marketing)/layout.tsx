@@ -1,9 +1,9 @@
-import FloatingChat from "@/components/FloatingChat";
-import ScrollProgress from "@/components/scroll-progress";
+import FloatingChat from "@/components/FloatingChat"
+import ScrollProgress from "@/components/scroll-progress"
 
-import { PropsWithChildren } from "react";
-import Footer from "./_components/footer";
-import Navbar from "./_components/navbar";
+import { PropsWithChildren } from "react"
+import Footer from "./_components/footer"
+import Navbar from "./_components/navbar"
 
 const MarketingLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -14,7 +14,7 @@ const MarketingLayout = ({ children }: PropsWithChildren) => {
       <ScrollProgress />
       <FloatingChat />
     </div>
-  );
-};
+  )
+}
 
-export default MarketingLayout;
+export default MarketingLayout

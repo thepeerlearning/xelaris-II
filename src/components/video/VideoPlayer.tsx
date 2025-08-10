@@ -1,14 +1,13 @@
-"use client";
-import { Play } from "lucide-react";
-import Image from "next/image";
-import { title } from "process";
-import React, { useState } from "react";
-import VideoModal from "./VideoModal";
+"use client"
+import { Play } from "lucide-react"
+import Image from "next/image"
+import React, { useState } from "react"
+import VideoModal from "./VideoModal"
 
 interface VideoPlayerProps {
-  videoUrl: string;
-  thumbnailUrl?: string;
-  className?: string;
+  videoUrl: string
+  thumbnailUrl?: string
+  className?: string
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
@@ -16,17 +15,17 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   thumbnailUrl,
   className = "",
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   // Generate thumbnail from video URL if not provided
   const defaultThumbnail = videoUrl.replace(
     "/video/upload/",
     "/video/upload/so_0,w_800,h_450,c_fill/"
-  );
+  )
 
   const handleVideoClick = () => {
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
   return (
     <>
@@ -38,12 +37,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         <div className="relative h-full w-full bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
           <Image
             src={thumbnailUrl || defaultThumbnail}
-            alt={title}
+            alt="Video thumbnail"
             fill
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             onError={(e) => {
               // Hide image if thumbnail fails to load, gradient background will show
-              e.currentTarget.style.display = "none";
+              e.currentTarget.style.display = "none"
             }}
           />
 
@@ -70,7 +69,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         videoUrl={videoUrl}
       />
     </>
-  );
-};
+  )
+}
 
-export default VideoPlayer;
+export default VideoPlayer
