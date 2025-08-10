@@ -107,20 +107,26 @@ export default function CheckoutForm() {
   }
 
   const inputClass =
-    "selection:bg-primary selection:text-secondary rounded h-10 w-full min-w-0 border bg-transparent px-4 py-2.5 text-base transition-[color] outline-none placeholder:text-[#BDC1CA] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-[15px]/[22px]"
+    "text-black w-full min-w-0 h-10 border border-gray-100 outline-0 focus:outline-0 bg-white px-3 py-1 text-base  transition-colors outline-none placeholder:text-[#BDC1CA] focus:border-background disabled:cursor-not-allowed disabled:opacity-50"
 
-  const stripeStyle = {
+  const baseStyle = {
     style: {
       base: {
+        color: "#000000",
+        backgroundColor: "#FFFFFF",
         fontSize: "16px",
-        color: "#1A1A1A",
+        fontFamily:
+          'Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial',
         "::placeholder": { color: "#BDC1CA" },
+        iconColor: "#BDC1CA",
       },
       invalid: { color: "#E23353" },
     },
-    hidePostalCode: true,
-    showIcon: true,
-  }
+  } as const
+
+  const numberOptions = { ...baseStyle, showIcon: true } // OK for CardNumber
+  const expiryOptions = { ...baseStyle } // no showIcon/hidePostalCode
+  const cvcOptions = { ...baseStyle } // no showIcon/hidePostalCode
   return (
     <React.Fragment>
       {isOpen ? (
@@ -145,15 +151,16 @@ export default function CheckoutForm() {
             <div className="relative">
               <CardNumberElement
                 id="cardNumber"
-                options={stripeStyle}
-                className={inputClass}
-              />{" "}
+                options={numberOptions}
+                className={`${inputClass} pr-12 z-10`}
+              />
               <Image
                 src="/cards.svg"
-                alt="payment cards"
-                width={10}
-                height={20}
-                className="w-auto h-auto absolute right-0 top-1"
+                alt=""
+                width={24}
+                height={16}
+                aria-hidden="true"
+                className="w-auto h-auto pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 z-0"
               />
             </div>
           </div>
@@ -164,7 +171,7 @@ export default function CheckoutForm() {
 
               <CardExpiryElement
                 id="expiry"
-                options={stripeStyle}
+                options={expiryOptions}
                 className={inputClass}
               />
             </div>
@@ -174,15 +181,16 @@ export default function CheckoutForm() {
               <div className="relative">
                 <CardCvcElement
                   id="cvc"
-                  options={stripeStyle}
-                  className={inputClass}
+                  options={cvcOptions}
+                  className={`${inputClass} pr-10`}
                 />
                 <Image
                   src="/cvv.svg"
-                  alt="Cvv icon"
-                  width={10}
+                  alt=""
+                  width={20}
                   height={20}
-                  className="w-auto h-auto absolute right-2 top-3"
+                  aria-hidden="true"
+                  className="w-auto h-auto pointer-events-none absolute right-2 top-1/2 -translate-y-1/2"
                 />
               </div>
             </div>

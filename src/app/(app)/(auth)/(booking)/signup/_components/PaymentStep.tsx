@@ -199,7 +199,7 @@ const CheckoutForm = ({
           <CardNumberElement
             id="cardNumber"
             options={numberOptions}
-            className={`${inputClass} pr-12 z-10`} // <-- add padding-right
+            className={`${inputClass} pr-12 z-10`}
           />
           <Image
             src="/cards.svg"
