@@ -104,7 +104,9 @@ export function ChangePassword() {
             name="oldPassword"
             render={({ field, fieldState }) => (
               <FormItem>
-                <FormLabel htmlFor="oldPassword">Old password</FormLabel>
+                <FormLabel htmlFor="oldPassword" className="text-white">
+                  Old password
+                </FormLabel>
 
                 <FormControl>
                   <div className="relative">
@@ -150,7 +152,9 @@ export function ChangePassword() {
             render={({ field, fieldState }) => (
               <FormItem>
                 <div className="w-full h-[14px] flex justify-between items-center">
-                  <FormLabel htmlFor="password">New password</FormLabel>
+                  <FormLabel htmlFor="password" className="text-white">
+                    New password
+                  </FormLabel>
                 </div>
 
                 <FormControl>
@@ -196,7 +200,7 @@ export function ChangePassword() {
             render={({ field, fieldState }) => (
               <FormItem>
                 <div className="w-full h-[14px] flex justify-between items-center">
-                  <FormLabel htmlFor="confirmPassword">
+                  <FormLabel htmlFor="confirmPassword" className="text-white">
                     Confirm new password
                   </FormLabel>
                 </div>

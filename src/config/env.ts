@@ -5,7 +5,6 @@
 
 interface EnvironmentConfig {
   // Stripe Configuration
-  STRIPE_SECRET_KEY: string
   NEXT_PUBLIC_STRIPE_PUBLIC_KEY: string
 
   // Application Configuration
@@ -19,7 +18,6 @@ interface EnvironmentConfig {
  */
 function validateEnvironment(): EnvironmentConfig {
   return {
-    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY!,
     NEXT_PUBLIC_STRIPE_PUBLIC_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL!,
     NODE_ENV:

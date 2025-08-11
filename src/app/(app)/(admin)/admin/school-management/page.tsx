@@ -98,7 +98,7 @@ export default function BillingHistory() {
               return (
                 <div
                   key={`duration number: ${i}`}
-                  className="font-normal font-inter text-sm text-secondary text-nowrap overflow-hidden text-ellipsis"
+                  className="font-bold font-inter text-sm text-secondary text-nowrap overflow-hidden text-ellipsis"
                 >
                   {price.duration}
                 </div>
@@ -108,7 +108,7 @@ export default function BillingHistory() {
               return (
                 <div
                   key={`duration number: ${i}`}
-                  className="font-normal font-inter text-sm text-secondary text-nowrap overflow-hidden text-ellipsis"
+                  className="font-bold font-inter text-sm text-secondary text-nowrap overflow-hidden text-ellipsis"
                 >
                   {price.idx}
                 </div>
@@ -116,10 +116,13 @@ export default function BillingHistory() {
             }),
             row.prices?.map((price: any, i: number) => {
               return (
-                <div className="flex gap-2" key={price.id}>
+                <div
+                  className="flex gap-2 justify-between items-center"
+                  key={price.id}
+                >
                   <span
                     key={`price number: ${i}`}
-                    className="font-normal font-inter text-sm text-secondary text-nowrap overflow-hidden text-ellipsis"
+                    className="font-bold font-inter text-sm text-secondary text-nowrap overflow-hidden text-ellipsis"
                   >
                     $
                     {Number(price.amount).toLocaleString("en-US", {
@@ -127,16 +130,18 @@ export default function BillingHistory() {
                       maximumFractionDigits: 2,
                     })}
                   </span>
-                  <DeleteSchoolPrice id={price.id} />
+                  <span className="flex items-center gap-1">
+                    <UpdateSchoolPrice row={row} rowPrice={price} />
+                    <DeleteSchoolPrice id={price.id} />
+                  </span>
                 </div>
               )
             }),
             <Callout
               icon={<Ellipsis />}
               FirstActionButton={<AddSchoolPrice id={row.id} />}
-              SecondActionButton={<UpdateSchoolPrice row={row} />}
-              ThirdActionButton={<UpdateSchool row={row} />}
-              FourthActionButton={<DeleteSchool id={row.id} />}
+              SecondActionButton={<UpdateSchool row={row} />}
+              ThirdActionButton={<DeleteSchool id={row.id} />}
             />
           )
         })

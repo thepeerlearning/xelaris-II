@@ -17,26 +17,103 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { addSchool, getSchools } from "@/lib/redux"
+import { getSchools, updatePrice } from "@/lib/redux"
 import { useAppDispatch } from "@/lib/redux/hooks"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { isEmpty } from "lodash"
 import { Edit } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import {
+  Controller,
+  useForm,
+  type ControllerFieldState,
+  type ControllerRenderProps,
+} from "react-hook-form"
 import { z } from "zod"
 
+// --- schema: all strings, with numeric validation ---
 const validationSchema = z.object({
-  oldPrice: z.string().min(1, "Old price is required"),
-  newPrice: z.string().min(1, "New price is required"),
-  duration: z.string().min(1, "Duration is required"),
-  classPerWeek: z.string().min(1, "Class number is required"),
+  oldPrice: z
+    .string()
+    .min(1, "Old price is required")
+    .regex(/^\d+(\.\d{1,2})?$/, "Invalid price"),
+  newPrice: z
+    .string()
+    .min(1, "New price is required")
+    .regex(/^\d+(\.\d{1,2})?$/, "Invalid price"),
+  duration: z
+    .string()
+    .min(1, "Duration is required")
+    .regex(/^\d+$/, "Duration must be a whole number"),
+  classPerWeek: z
+    .string()
+    .min(1, "Class number is required")
+    .regex(/^\d+$/, "Classes per week must be a whole number"),
 })
 
 type FormValues = z.infer<typeof validationSchema>
 
-export default function AddSchool({ row }: any) {
+// --- helpers ---
+const sanitizeAmount = (s: string) => {
+  const cleaned = s.replace(/[^0-9.]/g, "")
+  const parts = cleaned.split(".")
+  return parts.length > 2 ? `${parts[0]}.${parts.slice(1).join("")}` : cleaned
+}
+
+// Keep raw numeric string while typing; format on blur when not focused
+interface CurrencyInputProps {
+  field: ControllerRenderProps<FormValues, "oldPrice" | "newPrice">
+  fieldState: ControllerFieldState
+  placeholder?: string
+  disabled?: boolean
+}
+const CurrencyInput = ({
+  field,
+  fieldState,
+  placeholder,
+  disabled,
+}: CurrencyInputProps) => {
+  const [isEditing, setIsEditing] = useState(false)
+
+  const toCurrency = (v: string | number | undefined): string => {
+    const n = Number.parseFloat(String(v ?? ""))
+    return Number.isFinite(n)
+      ? new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+        }).format(n)
+      : ""
+  }
+
+  return (
+    <div className="relative">
+      <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+        $
+      </span>
+      <Input
+        type="text"
+        disabled={disabled}
+        className={cn("pl-6", fieldState.error && "border-red-500")}
+        placeholder={placeholder}
+        name={field.name}
+        ref={field.ref}
+        onFocus={() => setIsEditing(true)}
+        onBlur={(e) => {
+          setIsEditing(false)
+          field.onChange(sanitizeAmount(e.target.value))
+          field.onBlur()
+        }}
+        onChange={(e) => field.onChange(sanitizeAmount(e.target.value))}
+        value={isEditing ? field.value ?? "" : toCurrency(field.value)}
+        inputMode="decimal"
+        aria-invalid={!!fieldState.error}
+      />
+    </div>
+  )
+}
+
+export default function UpdateSchoolPrice({ row, rowPrice }: any) {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const dispatch = useAppDispatch()
@@ -49,29 +126,30 @@ export default function AddSchool({ row }: any) {
       duration: "",
       classPerWeek: "1",
     },
+    mode: "onBlur",
   })
 
-  const price = form.watch("oldPrice")
-
+  // prefill from rowPrice
   useEffect(() => {
-    const selectPrice = row?.prices?.find((item: any) => item.id === price)
-    form.setValue("newPrice", selectPrice?.amount)
-    form.setValue("duration", selectPrice?.duration)
-    form.setValue("classPerWeek", selectPrice?.idx)
-  }, [form, price, row])
+    form.setValue("oldPrice", sanitizeAmount(rowPrice?.amount ?? ""))
+    form.setValue("duration", String(rowPrice?.duration ?? ""))
+    form.setValue("classPerWeek", String(rowPrice?.idx ?? "1"))
+  }, [form, rowPrice, row])
 
+  const priceIdOrOld = form.watch("oldPrice")
+  console.log("rowPrice", rowPrice)
   const onSubmit = (data: FormValues) => {
     const inputData = {
-      id: price,
+      id: rowPrice.id,
       default_currency: "USD",
       idx: Number(data.classPerWeek),
-      amount: data.newPrice,
+      amount: sanitizeAmount(data.newPrice),
       duration: data.duration,
       school_id: row?.id,
     }
 
     setLoading(true)
-    dispatch(addSchool({ inputData }))
+    dispatch(updatePrice({ inputData }))
       .unwrap()
       .then(() => {
         setLoading(false)
@@ -87,32 +165,37 @@ export default function AddSchool({ row }: any) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-[200px] h-[45px] py-[12px] gap-2 normal-case font-bold font-inter text-[14px]/[24px] md:text-[16px]/[20px] text-secondary bg-white hover:bg-white hover:scale-[1.008] transition duration-300 ease-in-out justify-start">
-          <Edit /> Update school price
+        <Button variant="ghost" size="icon">
+          <Edit />
         </Button>
       </DialogTrigger>
       <DialogContent className="w-full flex flex-col gap-5">
-        <DialogTitle>Update Price</DialogTitle>
+        <DialogTitle className="text-center">
+          Update {row?.name} Price
+        </DialogTitle>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
-            {/* Title & Age */}
-            <FormField
+            {/* Old price (read-only) */}
+            <Controller
               control={form.control}
               name="oldPrice"
               render={({ field, fieldState }) => (
                 <FormItem>
-                  <FormLabel>Old price</FormLabel>
+                  <FormLabel className="text-white">Old price</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      className={cn(fieldState.error && "border-red-500")}
+                    <CurrencyInput
+                      field={field}
+                      fieldState={fieldState}
+                      placeholder="0.00"
+                      disabled
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            {!isEmpty(price) ? (
+
+            {!isEmpty(priceIdOrOld) ? (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
@@ -120,11 +203,16 @@ export default function AddSchool({ row }: any) {
                     name="classPerWeek"
                     render={({ field, fieldState }) => (
                       <FormItem>
-                        <FormLabel>Number of class per week</FormLabel>
+                        <FormLabel className="text-white">
+                          Number of class per week
+                        </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
-                            placeholder="e.g., ABC School"
+                            inputMode="numeric"
+                            type="number"
+                            min={1}
+                            step={1}
                             className={cn(fieldState.error && "border-red-500")}
                           />
                         </FormControl>
@@ -132,17 +220,18 @@ export default function AddSchool({ row }: any) {
                       </FormItem>
                     )}
                   />
-                  <FormField
+
+                  <Controller
                     control={form.control}
                     name="newPrice"
                     render={({ field, fieldState }) => (
                       <FormItem>
-                        <FormLabel>New price</FormLabel>
+                        <FormLabel className="text-white">New price</FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="e.g., ABC School"
-                            className={cn(fieldState.error && "border-red-500")}
+                          <CurrencyInput
+                            field={field}
+                            fieldState={fieldState}
+                            placeholder="e.g., 10.00"
                           />
                         </FormControl>
                         <FormMessage />
@@ -150,16 +239,22 @@ export default function AddSchool({ row }: any) {
                     )}
                   />
                 </div>
+
                 <FormField
                   control={form.control}
                   name="duration"
                   render={({ field, fieldState }) => (
                     <FormItem>
-                      <FormLabel>New duration (Time in minutes)</FormLabel>
+                      <FormLabel className="text-white">
+                        New duration (minutes)
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder="e.g., ABC School"
+                          inputMode="numeric"
+                          type="number"
+                          min={1}
+                          step={1}
                           className={cn(fieldState.error && "border-red-500")}
                         />
                       </FormControl>
@@ -171,8 +266,6 @@ export default function AddSchool({ row }: any) {
             ) : null}
 
             <Separator className="my-4" />
-
-            {/* Submit / Cancel */}
             <div className="flex gap-2">
               <Button
                 type="button"

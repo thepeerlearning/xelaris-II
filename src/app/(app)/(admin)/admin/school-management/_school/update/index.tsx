@@ -72,7 +72,7 @@ export default function AddSchool({ row }: any) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-[200px] h-[45px] py-[12px] gap-2 normal-case font-bold font-inter text-[14px]/[24px] md:text-[16px]/[20px] text-secondary bg-white hover:bg-white hover:scale-[1.008] transition duration-300 ease-in-out justify-start">
+        <Button className="w-[200px] h-[45px] py-[12px] gap-2 capitalize font-bold font-inter text-[14px]/[24px] md:text-[16px]/[20px] text-black rounded-md bg-white hover:scale-[1.008] transition duration-300 ease-in-out justify-start">
           <Edit /> Update school
         </Button>
       </DialogTrigger>
@@ -87,7 +87,7 @@ export default function AddSchool({ row }: any) {
                 name="title"
                 render={({ field, fieldState }) => (
                   <FormItem>
-                    <FormLabel>School name</FormLabel>
+                    <FormLabel className="text-white">School name</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -105,7 +105,7 @@ export default function AddSchool({ row }: any) {
                 name="age"
                 render={({ field, fieldState }) => (
                   <FormItem>
-                    <FormLabel>Age range</FormLabel>
+                    <FormLabel className="text-white">Age range</FormLabel>
                     <FormControl>
                       <Input
                         {...field}

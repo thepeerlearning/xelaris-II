@@ -38,7 +38,7 @@ export default function DeleteSchool({ id }: { id: string }) {
         <Button
           type="button"
           variant="outline"
-          className="w-full h-[45px] bg-primary text-white hover:bg-primary hover:text-white py-[12px] gap-2 normal-case font-bold font-inter text-[14px]/[24px] md:text-[16px]/[20px] text-error justify-start cursor-pointer"
+          className="w-full h-[45px] hover:bg-red-600 hover:text-white py-[12px] gap-2 font-bold font-inter text-[14px]/[24px] md:text-[16px]/[20px] text-red-600 justify-start cursor-pointer rounded-md border-red-600 hover:border-red-600 capitalize"
         >
           Delete school
         </Button>

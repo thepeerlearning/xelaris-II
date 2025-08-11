@@ -26,13 +26,18 @@ function Callout({
   FourthActionButton,
   icon,
 }: CalloutProps) {
+  // Function to prevent dropdown from closing on item click
+  const handleItemSelect = (event: Event) => {
+    event.preventDefault()
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost" // Use ghost variant for a subtle button, similar to IconButton
           size="icon" // Make it an icon button
-          className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800" // Custom hover style
+          className="cursor-pointer  hover:bg-gray-100 dark:hover:bg-gray-800" // Custom hover style
           aria-label="More options"
         >
           {icon}
@@ -40,7 +45,7 @@ function Callout({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className={cn(
-          "w-[150px] rounded-lg p-2 shadow-lg", // minWidth, borderRadius, padding, boxShadow
+          "bg-gray-800 min-w-[150px] rounded-lg p-2 shadow-lg", // minWidth, borderRadius, padding, boxShadow
           "text-muted-foreground text-xs font-bold leading-none" // color, font, line-height
         )}
         align="start" // anchorOrigin vertical: "bottom", horizontal: "left" -> align="start"
@@ -48,7 +53,10 @@ function Callout({
       >
         {FirstActionButton && (
           <>
-            <DropdownMenuItem className="px-2 py-1.5 cursor-pointer">
+            <DropdownMenuItem
+              className="px-2 py-1.5 cursor-pointer"
+              onSelect={handleItemSelect}
+            >
               {FirstActionButton}
             </DropdownMenuItem>
             {SecondActionButton && (
@@ -58,7 +66,10 @@ function Callout({
         )}
         {SecondActionButton && (
           <>
-            <DropdownMenuItem className="px-2 py-1.5 cursor-pointer">
+            <DropdownMenuItem
+              className="px-2 py-1.5 cursor-pointer"
+              onSelect={handleItemSelect}
+            >
               {SecondActionButton}
             </DropdownMenuItem>
             {ThirdActionButton && (
@@ -68,7 +79,10 @@ function Callout({
         )}
         {ThirdActionButton && (
           <>
-            <DropdownMenuItem className="px-2 py-1.5 cursor-pointer">
+            <DropdownMenuItem
+              className="px-2 py-1.5 cursor-pointer"
+              onSelect={handleItemSelect}
+            >
               {ThirdActionButton}
             </DropdownMenuItem>
             {FourthActionButton && (
@@ -77,7 +91,10 @@ function Callout({
           </>
         )}
         {FourthActionButton && (
-          <DropdownMenuItem className="px-2 py-1.5 cursor-pointer">
+          <DropdownMenuItem
+            className="px-2 py-1.5 cursor-pointer"
+            onSelect={handleItemSelect}
+          >
             {FourthActionButton}
           </DropdownMenuItem>
         )}

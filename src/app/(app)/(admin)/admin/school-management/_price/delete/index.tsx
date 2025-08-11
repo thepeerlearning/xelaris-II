@@ -36,7 +36,9 @@ export default function DeleteSchoolPrice({ id }: { id: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Trash className="text-primary w-4 h-4 cursor-pointer" />
+        <Button variant="ghost" size="icon">
+          <Trash className="text-red-600 w-4 h-4 cursor-pointer" />
+        </Button>
       </DialogTrigger>
       <DialogContent className="w-full flex flex-col gap-5 justify-center items-center">
         <DialogTitle className="w-full font-inter font-normal text-[19px]/[28px] tracking-[0.2px] text-left text-secondary uppercase">
