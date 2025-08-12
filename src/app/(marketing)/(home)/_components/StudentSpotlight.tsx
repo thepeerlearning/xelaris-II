@@ -24,13 +24,16 @@ const spotlightData = [
       "https://res.cloudinary.com/djeoaylbe/video/upload/v1751487159/WhatsApp_Video_2025-06-20_at_13.25.54_1_psrji2.mov",
     text: (
       <>
-        We’re so proud of our student Zach! He did an amazing job presenting his
-        AI project at the camp. His parent were truly impressed by how confident
-        and clear he was throughout his presentation.{" "}
+        Last year, Fedir placed{" "}
         <strong>
-          As his mom said, they attribute his success to the support and
-          guidance he’s receiving through our program.
+          {" "}
+          2nd in Computer Science at the National BETA State Convention
         </strong>
+        . This year, he returned to the{" "}
+        <strong>2025 competition and placed 7th</strong>. Same stage. Tougher
+        competition and greater pressure. 7th place out of thousands of the
+        brightest kids in America? That&lsquo;s not failure. That&lsquo;s ELITE
+        performance.
       </>
     ),
   },
@@ -61,7 +64,7 @@ const SpotlightCard = ({
   text: React.ReactNode;
   thumbnail: string;
 }) => (
-  <div className="bg-primary w-full  h-fit md:h-[562px] p-5 md:p-10 space-y-[32px]">
+  <div className="bg-primary w-full  h-fit md:min-h-[562px] p-5 md:p-10 space-y-[32px]">
     <VideoPlayer
       thumbnailUrl={thumbnail}
       className="h-[174.38px] md:h-[338.39px] w-full"

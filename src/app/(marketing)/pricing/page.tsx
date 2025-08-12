@@ -1,6 +1,6 @@
-import Container from "@/components/container"
-import { Check } from "lucide-react"
-import BookClassButton from "../_components/bookClass"
+import Container from "@/components/container";
+import { Check } from "lucide-react";
+import BookClassButton from "../_components/bookClass";
 
 const PricingData = [
   {
@@ -42,7 +42,20 @@ const PricingData = [
       "Course certification.",
     ],
   },
-]
+  {
+    duration: "45 minutes private lesson once a week ",
+    price: "$220",
+    timeframe: "month",
+    benefits: [
+      "Weekly 45-minute 1:1 classes with an experienced instructor.",
+      "Personalized lessons tailored to your child`s pace and learning style.",
+      "Detailed instructor session notes outlining what was covered in each class",
+      "Dedicated, responsive support available 7 days a week.",
+      "Easily reschedule your child`s class anytime.",
+      "Course certification.",
+    ],
+  },
+];
 
 const PricingPage = () => {
   return (
@@ -57,7 +70,7 @@ const PricingPage = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {PricingData.map(({ duration, price, timeframe, benefits }) => (
             <div key={duration} className="w-full bg-background">
               <div className="p-6">
@@ -87,7 +100,7 @@ const PricingPage = () => {
         </div>
       </Container>
     </section>
-  )
-}
+  );
+};
 
-export default PricingPage
+export default PricingPage;

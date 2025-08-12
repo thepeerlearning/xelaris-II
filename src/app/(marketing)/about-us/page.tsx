@@ -47,11 +47,11 @@ const TeamData = [
     role: "Software Developer",
     imageUrl: "/assets/images/people/daniela_reyes.png",
   },
-  {
+  /* {
     name: "Malik Gwandu",
     role: "Product Designer",
     imageUrl: "/assets/images/people/malik_gwandu.png",
-  },
+  }, */
   {
     name: "Sophie Patel",
     role: "Product Designer",
@@ -62,11 +62,11 @@ const TeamData = [
     role: "AI/ML Engineer",
     imageUrl: "/assets/images/people/eliana_luca.png",
   },
-  {
+  /*  {
     name: "Sam Eseyin",
     role: "Product Designer",
     imageUrl: "/assets/images/people/sam_eseyin.png",
-  },
+  }, */
   {
     name: "Jordan Smith",
     role: "Software Developer",
@@ -122,7 +122,7 @@ const AboutUsPage = () => {
                 alt={team.name}
                 height={247}
                 width={372}
-                className="w-full h-[247px] md:w-[264px] md:h-[202px]"
+                className="w-full object-cover h-[247px] md:w-[264px] md:h-[202px]"
               />
               <div className="w-full h-[100px] py-[16px] px-[14px] gap-[8px] flex flex-col">
                 <h1 className="text-2xl text-primary">{team.name}</h1>

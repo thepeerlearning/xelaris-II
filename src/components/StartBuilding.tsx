@@ -1,16 +1,16 @@
-import BookClassButton from "@/app/(marketing)/_components/bookClass"
-import Container from "@/components/container"
-import Image from "next/image"
-import React from "react"
+import BookClassButton from "@/app/(marketing)/_components/bookClass";
+import Container from "@/components/container";
+import Image from "next/image";
+import React from "react";
 
 interface StudentProjectData {
-  index: string
-  name: string
-  bgColor: string
-  label1: string
-  label2: string
-  text: React.ReactNode
-  imageUrl: string
+  index: string;
+  name: string;
+  bgColor: string;
+  label1: string;
+  label2: string;
+  text: React.ReactNode;
+  imageUrl: string;
 }
 
 const data: StudentProjectData[] = [
@@ -198,13 +198,13 @@ const data: StudentProjectData[] = [
       </>
     ),
   },
-]
+];
 
 const StudentProject = ({ project }: { project: StudentProjectData }) => {
-  const { name, bgColor, label1, label2, text, imageUrl } = project
+  const { name, bgColor, label1, label2, text, imageUrl } = project;
 
   return (
-    <section className="pb-10 lg:pb-[144px] md:pb-[216px] border-t border-[#FFFEFA80] pt-4 w-full bg-background sticky top-20">
+    <section className="pb-10 lg:pb-[144px] md:pb-[216px] border-t border-[#FFFEFA80] pt-4 w-full bg-background lg:sticky lg:top-20">
       <Container>
         {/* Header */}
         <div className="w-full flex items-center gap-2">
@@ -218,7 +218,7 @@ const StudentProject = ({ project }: { project: StudentProjectData }) => {
         </div>
 
         {/* Content */}
-        <div className="w-full flex flex-col md:flex-row md:justify-between mt-12 gap-20 max-lg:flex-col-reverse">
+        <div className="w-full flex flex-col md:flex-row md:justify-between mt-12  max-lg:gap-10 gap-20 max-lg:flex-col-reverse">
           {/* Left */}
           <div className="w-full md:w-[615px]">
             <h1 className="text-light font-sans font-medium text-[30.4px]  leading-[36.48px] ">
@@ -256,8 +256,8 @@ const StudentProject = ({ project }: { project: StudentProjectData }) => {
         </div>
       </Container>
     </section>
-  )
-}
+  );
+};
 
 const StudentBuildings = () => {
   return (
@@ -288,7 +288,7 @@ const StudentBuildings = () => {
         <section className="sticky w-full bg-transparent h-[300px] max-lg:hidden"></section>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default StudentBuildings
+export default StudentBuildings;

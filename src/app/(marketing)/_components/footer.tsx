@@ -5,8 +5,8 @@ const footerData = [
   {
     title: "SITE MAP",
     links: [
-      { title: "About Us", link: "/about" },
-      { title: "Contact Us", link: "/contact" },
+      { title: "About Us", link: "/about-us" },
+      { title: "Contact Us", link: "/contact-us" },
       { title: "Pricing", link: "/pricing" },
       { title: "Careers", link: "/careers" },
     ],
