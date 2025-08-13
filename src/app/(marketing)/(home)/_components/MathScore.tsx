@@ -5,7 +5,7 @@ const MathScores = () => {
   return (
     <section className="">
       <Container className="border-t border-[#515151] py-10 lg:py-20">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-20 flex-1">
+        <div className="flex flex-col md:flex-row items-center justify-between  gap-10 lg:gap-20 flex-1">
           {/* Text Content */}
           <div className="space-y-5 lg:w-[40%]">
             <h1 className="text-4xl lg:text-4xl">
