@@ -7,20 +7,6 @@ import Image from "next/image"
 import { Slide, ToastContainer } from "react-toastify"
 import "./globals.css"
 
-// const spectral = Spectral({
-//   subsets: ["latin"],
-
-//   weight: ["400", "500", "600", "700"],
-
-//   display: "swap",
-//   variable: "--font-spectral",
-// })
-// const interSans = Inter({
-//   variable: "--font-inter",
-//   subsets: ["latin"],
-//   display: "swap",
-// })
-
 const interSans = localFont({
   src: [
     { path: "/fonts/Inter-Regular.woff2", weight: "400", style: "normal" },
