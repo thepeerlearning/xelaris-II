@@ -2,25 +2,67 @@ import AnalyticsTags from "@/components/Analytics"
 import StoreProvider from "@/lib/redux/providers"
 import { Analytics } from "@vercel/analytics/next"
 import type { Metadata } from "next"
-import { Inter, Spectral } from "next/font/google"
+import localFont from "next/font/local"
 import Image from "next/image"
 import { Slide, ToastContainer } from "react-toastify"
 import "./globals.css"
 
-const spectral = Spectral({
-  subsets: ["latin"],
+// const spectral = Spectral({
+//   subsets: ["latin"],
 
-  weight: ["400", "500", "600", "700"],
+//   weight: ["400", "500", "600", "700"],
 
-  display: "swap",
-  variable: "--font-spectral",
-})
-const interSans = Inter({
+//   display: "swap",
+//   variable: "--font-spectral",
+// })
+// const interSans = Inter({
+//   variable: "--font-inter",
+//   subsets: ["latin"],
+//   display: "swap",
+// })
+
+const interSans = localFont({
+  src: [
+    { path: "/fonts/Inter-Regular.woff2", weight: "400", style: "normal" },
+    { path: "/fonts/Inter-Medium.woff2", weight: "500", style: "normal" },
+    { path: "/fonts/Inter-SemiBold.woff2", weight: "600", style: "normal" },
+    { path: "/fonts/Inter-Bold.woff2", weight: "700", style: "normal" },
+    {
+      path: "/fonts/Inter-ExtraBold.woff2",
+      weight: "800",
+      style: "normal",
+    },
+  ],
   variable: "--font-inter",
-  subsets: ["latin"],
   display: "swap",
 })
 
+const spectral = localFont({
+  src: [
+    {
+      path: "/fonts/spectral-regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "/fonts/spectral-medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "/fonts/spectral-semibold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "/fonts/spectral-bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-spectral",
+  display: "swap",
+})
 // Environment check for server URL
 const dev = process.env.NODE_ENV !== "production"
 export const server = dev ? "http://localhost:3000" : "https://www.xelaris.co"

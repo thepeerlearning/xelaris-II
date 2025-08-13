@@ -18,6 +18,7 @@ export function MenuIcon(props: IconProps) {
     </svg>
   )
 }
+
 export function EyeVisibilityOnIcon({ className }: IconProps) {
   return (
     <svg
