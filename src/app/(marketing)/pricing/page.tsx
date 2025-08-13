@@ -4,6 +4,19 @@ import BookClassButton from "../_components/bookClass";
 
 const PricingData = [
   {
+    duration: "45 minutes private lesson once a week ",
+    price: "$220",
+    timeframe: "month",
+    benefits: [
+      "Weekly 45-minute 1:1 classes with an experienced instructor.",
+      "Personalized lessons tailored to your child`s pace and learning style.",
+      "Detailed instructor session notes outlining what was covered in each class",
+      "Dedicated, responsive support available 7 days a week.",
+      "Easily reschedule your child`s class anytime.",
+      "Course certification.",
+    ],
+  },
+  {
     duration: "1 hour private lesson once a week",
     price: "$275",
     timeframe: "month",
@@ -35,19 +48,6 @@ const PricingData = [
     timeframe: "month",
     benefits: [
       "Twice-weekly 60-minute 1:1 classes with an experienced instructor.",
-      "Personalized lessons tailored to your child`s pace and learning style.",
-      "Detailed instructor session notes outlining what was covered in each class",
-      "Dedicated, responsive support available 7 days a week.",
-      "Easily reschedule your child`s class anytime.",
-      "Course certification.",
-    ],
-  },
-  {
-    duration: "45 minutes private lesson once a week ",
-    price: "$220",
-    timeframe: "month",
-    benefits: [
-      "Weekly 45-minute 1:1 classes with an experienced instructor.",
       "Personalized lessons tailored to your child`s pace and learning style.",
       "Detailed instructor session notes outlining what was covered in each class",
       "Dedicated, responsive support available 7 days a week.",
