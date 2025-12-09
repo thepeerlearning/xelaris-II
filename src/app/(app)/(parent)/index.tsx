@@ -24,7 +24,7 @@ export default function LandingRootLayoutWrapper({
           <NotificationIcon />
           <div className="w-6 h-6 rounded-full flex justify-center items-center border border-[#0000001A]">
             <Image
-              src="/images/avatar-placeholder.webp"
+              src="/assets/images/avatar-placeholder.webp"
               alt="profile avatar"
               width={24}
               height={24}

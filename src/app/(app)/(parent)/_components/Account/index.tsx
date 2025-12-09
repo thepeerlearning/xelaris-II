@@ -165,7 +165,7 @@ export function PersonalInfo() {
   }
 
   return (
-    <div className="w-full h-full space-y-4">
+    <div className="w-full h-full space-y-4 text-white">
       <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
       <Form {...form}>
         <form
@@ -320,7 +320,7 @@ export function PersonalInfo() {
               {/* Profile Image Preview */}
               <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-gray-200">
                 <Image
-                  src={previewUrl || "/images/avatar-placeholder.webp"}
+                  src={previewUrl || "/assets/images/avatar-placeholder.webp"}
                   alt="Profile picture"
                   fill
                   className="object-cover object-top"

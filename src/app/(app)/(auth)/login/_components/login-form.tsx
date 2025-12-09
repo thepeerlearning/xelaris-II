@@ -45,7 +45,7 @@ const LoginForm = () => {
       .unwrap()
       .then(() => {
         setLoading(false)
-        router.push("/parent/home")
+        router.push("/parent/dashboard")
       })
       .catch((err: any) => {
         setLoading(false)
@@ -55,7 +55,7 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit} className="space-y-6 w-full text-black">
+      <form onSubmit={handleSubmit} className="space-y-6 w-full text-white">
         <FormField
           control={form.control}
           name="email"

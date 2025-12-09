@@ -150,7 +150,7 @@ const DropdownMenu = ({
               >
                 <Link
                   href={item.href}
-                  className={`block px-4 py-3 text-gray-700 hover:bg-gray-100 transition-colors duration-200 text-sm ${
+                  className={`block px-4 py-3 text-white hover:bg-gray-100 transition-colors duration-200 text-sm ${
                     pathname === item.href
                       ? "bg-gray-50 border-l-2 border-primary"
                       : ""

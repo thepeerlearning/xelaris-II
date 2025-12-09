@@ -5,7 +5,7 @@ import { FC } from "react"
 
 export const Header: FC = () => {
   return (
-    <header className="w-full fixed top-0 left-0 bg-secondary h-[65px] py-6 px-[21px] border-b border-[#EBEEF1] z-10 flex items-center">
+    <header className="w-full fixed top-0 left-0 bg-secondary text-white h-[65px] py-6 px-[21px] border-b border-[#EBEEF1] z-10 flex items-center">
       {/* Logo */}
       <div>
         <Link href="/" className="block">

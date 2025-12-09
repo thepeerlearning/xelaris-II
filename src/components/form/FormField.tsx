@@ -169,7 +169,7 @@ const FormField = <T extends FieldValues>({
           <label
             htmlFor={name}
             className={cn(
-              "text-sm font-medium text-gray-700",
+              "text-sm font-medium text-white",
               required && "after:content-['*'] after:ml-0.5 after:text-red-500"
             )}
           >

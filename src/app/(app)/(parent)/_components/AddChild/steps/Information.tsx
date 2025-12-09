@@ -48,7 +48,6 @@ const personalInfoSchema = z.object({
       message: "Password must contain at least one special character",
     }),
 })
-// Define the type from the schema
 type PersonalInfoValues = z.infer<typeof personalInfoSchema>
 
 interface PersonalInfoStepProps {
@@ -60,14 +59,13 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
   const { userData }: any = useAppSelector((state) => state.signup)
   const dispatch = useAppDispatch()
 
-  // Initialize the form with React Hook Form and Zod validation
   const form = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
       childFullName: userData?.child_full_name ?? "",
       password: userData?.password ?? "",
     },
-    mode: "onBlur", // Validate on blur for better user experience
+    mode: "onBlur",
   })
 
   const { formState } = form
@@ -108,7 +106,9 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
             render={({ field, fieldState }) => {
               return (
                 <FormItem>
-                  <FormLabel htmlFor="childFullName">Child Full Name</FormLabel>
+                  <FormLabel className="text-white" htmlFor="childFullName">
+                    Child Full Name
+                  </FormLabel>
                   <FormControl>
                     <Input
                       id="childFullName"
@@ -133,7 +133,9 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
             name="password"
             render={({ field, fieldState }) => (
               <FormItem>
-                <FormLabel htmlFor="password">Password</FormLabel>
+                <FormLabel className="text-white" htmlFor="password">
+                  Password
+                </FormLabel>
                 <FormControl>
                   <Input
                     id="password"
