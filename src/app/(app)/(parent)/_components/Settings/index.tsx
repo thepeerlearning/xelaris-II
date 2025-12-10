@@ -21,6 +21,9 @@ import * as z from "zod"
 
 const infoSchema = z
   .object({
+    currentPassword: z
+      .string({ required_error: "Please enter a password" })
+      .min(8, "Password must be at least 8 characters"),
     password: z
       .string({ required_error: "Please enter a password" })
       .min(8, "Password must be at least 8 characters"),
@@ -38,6 +41,7 @@ type infoValues = z.infer<typeof infoSchema>
 
 export function ChangePassword() {
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const dispatch = useAppDispatch()
@@ -46,10 +50,11 @@ export function ChangePassword() {
   const form = useForm<infoValues>({
     resolver: zodResolver(infoSchema),
     defaultValues: {
+      currentPassword: "",
       password: "",
       confirmPassword: "",
     },
-    mode: "onBlur", // Validate on blur for better user experience
+    mode: "onBlur",
   })
 
   const { formState } = form
@@ -57,12 +62,12 @@ export function ChangePassword() {
 
   // Handle form submission
   function onSubmit(values: infoValues) {
-    const { confirmPassword, password } = values
+    const { confirmPassword, password, currentPassword } = values
     const inputData = {
+      current_password: currentPassword,
       password: password?.trim(),
-      confirmPassword: confirmPassword?.trim(),
+      confirm_password: confirmPassword?.trim(),
     }
-
     setIsSubmitting(true)
     dispatch(changeParentPassword({ inputData }))
       .unwrap()
@@ -74,6 +79,9 @@ export function ChangePassword() {
       })
   }
 
+  const toggleCurrentPasswordVisibility = () => {
+    setShowCurrentPassword(!showCurrentPassword)
+  }
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword)
   }
@@ -90,6 +98,54 @@ export function ChangePassword() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full xl:w-[420px] grid grid-cols-1 gap-4"
         >
+          <FormField
+            control={form.control}
+            name="currentPassword"
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormLabel htmlFor="currentPassword">
+                  Current Password
+                </FormLabel>
+
+                <FormControl>
+                  <div className="relative">
+                    <Input
+                      id="currentPassword"
+                      type={showCurrentPassword ? "text" : "password"}
+                      placeholder="••••••••"
+                      className={cn(
+                        "pr-10",
+                        fieldState.error &&
+                          "border-[#E23353] focus-visible:ring-[#E23353]"
+                      )}
+                      {...field}
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-1 top-0 h-full px-3 py-2 text-[#404452] hover:bg-transparent hover:text-[#404452] cursor-pointer"
+                      onClick={toggleCurrentPasswordVisibility}
+                    >
+                      {showCurrentPassword ? (
+                        <EyevisibilityOffIcon className="h-4 w-4" />
+                      ) : (
+                        <EyeVisibilityOnIcon className="h-4 w-4" />
+                      )}
+                      <span className="sr-only">
+                        {showCurrentPassword
+                          ? "Hide password"
+                          : "Show password"}
+                      </span>
+                    </Button>
+                  </div>
+                </FormControl>
+                {fieldState.error && (
+                  <ErrorMessage>{fieldState.error.message}</ErrorMessage>
+                )}
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="password"
@@ -188,7 +244,7 @@ export function ChangePassword() {
           <Button
             type="submit"
             disabled={isSubmitting || !isValid}
-            className="w-full h-[46px] py-[9px] px-[13px] flex gap-1 font-inter font-normal text-[17px]/[24px] text-[#FFFAF3] tracking-normal mt-6"
+            className="w-full h-[46px] py-[9px] px-[13px] flex gap-1 font-inter font-normal text-[17px]/[24px] tracking-normal mt-6"
           >
             {isSubmitting ? "Saving..." : "Save"}{" "}
           </Button>

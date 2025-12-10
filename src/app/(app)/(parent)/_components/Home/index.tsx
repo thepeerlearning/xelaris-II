@@ -21,6 +21,7 @@ export default function HomePage() {
   React.useEffect(() => {
     dispatch(getChildren())
   }, [dispatch])
+
   return (
     <div className="w-full max-w-[460px] flex flex-col gap-4">
       <h4 className="font-normal font-inter text-[16px]/[24px] sm:text-[17px]/[26px] text-white tracking-normal">
@@ -40,10 +41,20 @@ export default function HomePage() {
           >
             <div className="flex flex-col gap-2 p-4 sm:p-6">
               <h4 className="font-normal font-inter text-[16px]/[24px] sm:text-[17px]/[26px] text-white tracking-normal">
-                {child.name}
+                {`${child.name} - username: ${child.username ?? ""}`}
               </h4>
               <p className="font-normal font-inter text-[14px]/[22px] sm:text-[16px]/[26px] text-white tracking-normal">
-                {child.course}
+                {`(${child.school?.name ?? ""} - age range: ${
+                  child?.school?.age_range ?? ""
+                } )`}
+              </p>
+              <p className="font-normal font-inter text-[14px]/[22px] sm:text-[16px]/[26px] text-white tracking-normal">
+                {`Class: starts -(${child.class?.start_date ?? ""} - ends: ${
+                  child?.class?.end_date ?? ""
+                } )`}
+              </p>
+              <p className="font-normal font-inter text-[14px]/[22px] sm:text-[16px]/[26px] text-white tracking-normal">
+                {`Timezone: ${child.class?.timezone ?? ""}`}
               </p>
             </div>
           </div>

@@ -4,7 +4,7 @@ import { deleteCookie, setCookie } from "cookies-next"
 import { toast } from "react-toastify"
 
 export const getParentProfile = createAsyncThunk(
-  "profile/getParentProfile",
+  "parent/getParentProfile",
   async (_, { rejectWithValue }: any) => {
     try {
       const response = await api.get(`parent-profile`)
@@ -31,9 +31,14 @@ export const updateParentProfile = createAsyncThunk(
   async ({ inputData }: any, { rejectWithValue }: any) => {
     try {
       const formdata = new FormData()
-      formdata.append("image", inputData.image)
+
+      if (inputData.image) {
+        formdata.append("image", inputData.image)
+      }
+
       formdata.append("country", inputData.country)
       formdata.append("timezone", inputData.timezone)
+
       const response = await api.put(`parent-profile`, formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -57,7 +62,6 @@ export const updateParentProfile = createAsyncThunk(
     }
   }
 )
-
 export const addChild = createAsyncThunk(
   "parent/addChild",
   async ({ inputData }: any, { rejectWithValue }: any) => {
@@ -340,7 +344,7 @@ export const getPaymentMethod = createAsyncThunk(
   "parent/getPaymentMethod",
   async (_, { rejectWithValue }: any) => {
     try {
-      const response = await api.get("parent-payment-method")
+      const response = await api.get("parent-active-subscriptions")
       return response.data
     } catch (error: any) {
       let message =

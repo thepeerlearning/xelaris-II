@@ -137,7 +137,6 @@ export function SchedulingStep({
     const selectedPrice: any = prices?.find((item: any) => item.id === price)
 
     if (selectedPrice) {
-      console.log("selectedPrice", selectedPrice)
       setValue("amount", selectedPrice?.amount)
       const shouldBeMulti = selectedPrice?.idx > 1
       if (isMulti !== shouldBeMulti) {
@@ -156,7 +155,6 @@ export function SchedulingStep({
       classDuration,
       isMulti,
     } = data
-    console.log("data", data)
     const t1 = toHHMM(availableTime)
     const t2 = isMulti ? toHHMM(timeTwo) : undefined
     const inputData = {

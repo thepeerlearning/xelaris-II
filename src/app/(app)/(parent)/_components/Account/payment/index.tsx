@@ -36,7 +36,7 @@ export function PaymentInfo() {
         <NoData />
       ) : (
         <>
-          {paymentMethod?.data.map((payment: any, index: number) => (
+          {paymentMethod?.map((payment: any, index: number) => (
             <div
               className="w-full md:w-[568px] rounded-xl border border-solid border-[#EAECF0] p-6 shadow-[0px_1px_2px_0px_#1018280D] flex flex-col gap-6"
               key={index}
@@ -44,17 +44,15 @@ export function PaymentInfo() {
               <div className="w-full flex flex-col md:flex-row gap-6">
                 <div className="w-full relative flex flex-col gap-1">
                   <Label htmlFor="name">Name on card</Label>
-                  <Input
-                    id="name"
-                    value={payment.billing_details.name}
-                    disabled
-                  />
+                  <Input id="name" value={payment?.name ?? ""} disabled />
                 </div>
                 <div className="w-[158px]">
                   <Label htmlFor="name">Expiry</Label>
                   <Input
                     id="expiry"
-                    value={`${payment.card.exp_month}/${payment.card.exp_year}`}
+                    value={`${payment?.card?.exp_month ?? ""}/${
+                      payment?.card?.exp_year ?? ""
+                    }`}
                     disabled
                   />
                 </div>
@@ -62,11 +60,19 @@ export function PaymentInfo() {
               <div className="w-full flex flex-col md:flex-row gap-6">
                 <div className="w-full">
                   <Label htmlFor="name">Card type</Label>
-                  <Input id="cardtype" value={payment.card.brand} disabled />
+                  <Input
+                    id="cardtype"
+                    value={payment?.card?.brand ?? ""}
+                    disabled
+                  />
                 </div>
                 <div className="w-[158px]">
                   <Label htmlFor="name">Card No (Last 4)</Label>
-                  <Input id="cardnumber" value={payment.card.last4} disabled />
+                  <Input
+                    id="cardnumber"
+                    value={payment?.card?.last4 ?? ""}
+                    disabled
+                  />
                 </div>
               </div>
               <EditPaymentMehtod />

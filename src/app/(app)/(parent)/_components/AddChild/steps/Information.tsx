@@ -67,7 +67,6 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
     },
     mode: "onBlur",
   })
-
   const { formState } = form
   const { isValid } = formState
 
@@ -75,11 +74,10 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
   function onSubmit(values: PersonalInfoValues) {
     const { password, childFullName } = values
     const inputData = {
-      child_full_name: childFullName,
+      name: childFullName,
       username: childFullName.split(" ")?.[0]?.trim(),
       password: password?.trim(),
     }
-
     setIsSubmitting(true)
     dispatch(addChild({ inputData }))
       .unwrap()
@@ -94,53 +92,24 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
   }
 
   return (
-    <div className="w-full h-full space-y-4">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full xl:w-[420px] grid grid-cols-1 gap-[10px]"
-        >
-          <FormField
-            control={form.control}
-            name="childFullName"
-            render={({ field, fieldState }) => {
-              return (
-                <FormItem>
-                  <FormLabel className="text-white" htmlFor="childFullName">
-                    Child Full Name
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      id="childFullName"
-                      placeholder="Jane Doe"
-                      className={cn(
-                        fieldState.error &&
-                          "border-[#E23353] focus-visible:ring-[#E23353]"
-                      )}
-                      {...field}
-                    />
-                  </FormControl>
-
-                  {fieldState.error && (
-                    <ErrorMessage>{fieldState.error.message}</ErrorMessage>
-                  )}
-                </FormItem>
-              )
-            }}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field, fieldState }) => (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full md:w-[420px] grid grid-cols-1 gap-[10px]"
+      >
+        <FormField
+          control={form.control}
+          name="childFullName"
+          render={({ field, fieldState }) => {
+            return (
               <FormItem>
-                <FormLabel className="text-white" htmlFor="password">
-                  Password
+                <FormLabel className="text-white" htmlFor="childFullName">
+                  Child Full Name
                 </FormLabel>
                 <FormControl>
                   <Input
-                    id="password"
-                    type="password"
-                    placeholder="••••••••"
+                    id="childFullName"
+                    placeholder="Jane Doe"
                     className={cn(
                       fieldState.error &&
                         "border-[#E23353] focus-visible:ring-[#E23353]"
@@ -148,22 +117,49 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
                     {...field}
                   />
                 </FormControl>
+
                 {fieldState.error && (
                   <ErrorMessage>{fieldState.error.message}</ErrorMessage>
                 )}
               </FormItem>
-            )}
-          />
-          <Button
-            type="submit"
-            disabled={isSubmitting || !isValid}
-            className="w-full h-[46px] py-[9px] px-[13px] flex gap-1 font-inter font-normal text-[17px]/[24px] text-[#FFFAF3] tracking-normal mt-8"
-          >
-            {isSubmitting ? "Processing..." : "Continue"}{" "}
-            {!isSubmitting && <ArrowRight />}
-          </Button>
-        </form>
-      </Form>
-    </div>
+            )
+          }}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormLabel className="text-white" htmlFor="password">
+                Password
+              </FormLabel>
+              <FormControl>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  className={cn(
+                    fieldState.error &&
+                      "border-[#E23353] focus-visible:ring-[#E23353]"
+                  )}
+                  {...field}
+                />
+              </FormControl>
+              {fieldState.error && (
+                <ErrorMessage>{fieldState.error.message}</ErrorMessage>
+              )}
+            </FormItem>
+          )}
+        />
+        <Button
+          type="submit"
+          disabled={isSubmitting || !isValid}
+          className="w-full h-[46px] py-[9px] px-[13px] flex gap-1 font-inter font-normal text-[17px]/[24px] text-[#FFFAF3] tracking-normal mt-8"
+        >
+          {isSubmitting ? "Processing..." : "Continue"}{" "}
+          {!isSubmitting && <ArrowRight />}
+        </Button>
+      </form>
+    </Form>
   )
 }

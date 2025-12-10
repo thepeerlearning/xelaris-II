@@ -137,7 +137,6 @@ export default function UpdateSchoolPrice({ row, rowPrice }: any) {
   }, [form, rowPrice, row])
 
   const priceIdOrOld = form.watch("oldPrice")
-  console.log("rowPrice", rowPrice)
   const onSubmit = (data: FormValues) => {
     const inputData = {
       id: rowPrice.id,

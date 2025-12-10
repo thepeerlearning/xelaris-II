@@ -84,8 +84,7 @@ export default function MyDashboardPage() {
       const now = moment.tz(currentZone)
       const abbreviation = now.zoneAbbr() // Get the timezone abbreviation
       return abbreviation // Return the full name or abbreviation if not found
-    } catch (error) {
-      console.log("error", error)
+    } catch {
       return null
     }
   }

@@ -1,6 +1,8 @@
 "use client"
 
+import { ExclamationMarkIcon } from "@/components/svgs"
 import { Button } from "@/components/ui/button"
+import { Card, CardHeader } from "@/components/ui/card"
 import {
   ErrorMessage,
   Form,
@@ -18,19 +20,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Card, CardHeader } from "@/components/ui/card"
 import { countries } from "@/lib/data"
 import { updateParentProfile, updateUserData } from "@/lib/redux"
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
+import { useAppDispatch } from "@/lib/redux/hooks"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ArrowRight, X } from "lucide-react"
 import moment from "moment-timezone"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import Image from "next/image"
-import { ExclamationMarkIcon } from "@/components/svgs"
 
 const SUPPORTED_FORMAT = ["PNG", "JPEG", "JPG"].map((x) => "." + x).join(",")
 
@@ -61,39 +61,47 @@ const personalInfoSchema = z.object({
   phoneNumber: z
     .string({ required_error: "Please enter your phone number" })
     .min(6, { message: "Phone number is too short (minimum 6 digits)" })
-    .max(15, { message: "Phone number is too long (maximum 15 digits)" })
-    .refine((phone) => /^[0-9\-$$$$\s]+$/.test(phone), {
-      message:
-        "Phone number can only contain digits, spaces, hyphens, and parentheses",
-    }),
-
+    .max(15, { message: "Phone number is too long (maximum 15 digits)" }),
   timezone: z.string().optional(),
   img: z.any().optional(),
 })
 
-// Define the type from the schema
 type PersonalInfoValues = z.infer<typeof personalInfoSchema>
 
-export function PersonalInfo() {
+type ProfileProps = {
+  profile: {
+    country: string
+    email?: string
+    id: string
+    image?: string
+    link?: string
+    isActivated?: boolean
+    isVerified?: boolean
+    jwtToken?: string
+    name?: string
+    phone?: string
+    role?: string
+    timezone?: string
+  }
+}
+
+export function PersonalInfo({ profile }: ProfileProps) {
   const dispatch = useAppDispatch()
-  const { userData }: any = useAppSelector((state) => state.signup)
-  const { profile }: any = useAppSelector((state) => state.parent)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [editPhoto, setEditPhoto] = useState(false)
   const timezones = moment.tz.names()
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-
-  // Initialize the form with React Hook Form and Zod validation
+  // Form initialization
   const form = useForm<PersonalInfoValues>({
     resolver: zodResolver(personalInfoSchema),
     defaultValues: {
-      parentFullName: userData?.parent_full_name ?? "",
-      email: userData?.email ?? "",
-      phoneNumber: userData?.phone ?? "",
+      parentFullName: profile?.name ?? "",
+      email: profile?.email ?? "",
+      phoneNumber: profile?.phone ?? "",
       country: profile?.country ?? "",
       timezone: profile?.timezone ?? "",
     },
-    mode: "onBlur", // Validate on blur for better user experience
+    mode: "onBlur",
   })
 
   const {
@@ -104,9 +112,9 @@ export function PersonalInfo() {
     reset,
     formState: { errors },
   } = form
+
   const { isValid } = formState
   const img = watch("img")
-
   const convert2Base64 = (file: File) => {
     if (file) {
       const reader = new FileReader()
@@ -118,6 +126,7 @@ export function PersonalInfo() {
     }
   }
 
+  // Preview uploaded image
   useEffect(() => {
     if (img && img?.length > 0) {
       convert2Base64(img[0])
@@ -128,27 +137,38 @@ export function PersonalInfo() {
     setValue("timezone", profile?.timezone)
     setValue("country", profile?.country)
 
-    // Set the profile photo if available
     if (profile?.link) {
-      setPreviewUrl(profile.link)
+      setPreviewUrl(profile?.link)
+    } else {
+      setPreviewUrl(null)
     }
   }, [profile, setValue])
 
-  // Handle form submission
   function onSubmit(values: PersonalInfoValues) {
     const { country, timezone } = values
+    const file = img?.[0] as File | undefined
 
     const inputData = {
-      image: img?.[0],
-      country: country,
-      timezone: timezone,
+      image: file,
+      country,
+      timezone,
     }
 
     setIsSubmitting(true)
+
     dispatch(updateParentProfile({ inputData }))
       .unwrap()
-      .then(() => {
-        dispatch(updateUserData({ data: inputData }))
+      .then((res: any) => {
+        const apiProfile = res?.data
+
+        const safeUserData = {
+          country: apiProfile?.country ?? country,
+          timezone: apiProfile?.timezone ?? timezone,
+          image: apiProfile?.image ?? profile?.link ?? "",
+        }
+
+        dispatch(updateUserData({ data: safeUserData }))
+
         setIsSubmitting(false)
         setEditPhoto(false)
       })
@@ -160,7 +180,13 @@ export function PersonalInfo() {
   const cancelPhotoEdit = () => {
     // Reset the image field
     reset({ ...form.getValues(), img: undefined })
-    setPreviewUrl(profile?.link || null)
+
+    if (profile?.link) {
+      setPreviewUrl(profile?.link)
+    } else {
+      setPreviewUrl(null)
+    }
+
     setEditPhoto(false)
   }
 
@@ -172,6 +198,7 @@ export function PersonalInfo() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full xl:w-[420px] grid grid-cols-1 gap-[10px]"
         >
+          {/* Full name (read-only) */}
           <FormField
             control={form.control}
             name="parentFullName"
@@ -188,7 +215,7 @@ export function PersonalInfo() {
                         "border-[#E23353] focus-visible:ring-[#E23353]"
                     )}
                     {...field}
-                    disabled={true}
+                    disabled
                   />
                 </FormControl>
                 {fieldState.error && (
@@ -198,6 +225,7 @@ export function PersonalInfo() {
             )}
           />
 
+          {/* Email (read-only) */}
           <FormField
             control={form.control}
             name="email"
@@ -215,7 +243,7 @@ export function PersonalInfo() {
                         "border-[#E23353] focus-visible:ring-[#E23353]"
                     )}
                     {...field}
-                    disabled={true}
+                    disabled
                   />
                 </FormControl>
 
@@ -226,6 +254,7 @@ export function PersonalInfo() {
             )}
           />
 
+          {/* Phone (read-only) */}
           <FormField
             control={form.control}
             name="phoneNumber"
@@ -243,7 +272,7 @@ export function PersonalInfo() {
                         "border-[#E23353] focus-visible:ring-[#E23353]"
                     )}
                     {...field}
-                    disabled={true}
+                    disabled
                   />
                 </FormControl>
                 {fieldState.error && (
@@ -253,6 +282,7 @@ export function PersonalInfo() {
             )}
           />
 
+          {/* Country */}
           <FormField
             control={form.control}
             name="country"
@@ -282,6 +312,8 @@ export function PersonalInfo() {
               </FormItem>
             )}
           />
+
+          {/* Timezone */}
           <FormField
             control={form.control}
             name="timezone"
@@ -399,7 +431,7 @@ export function PersonalInfo() {
           <Button
             type="submit"
             disabled={isSubmitting || !isValid}
-            className="w-full h-[46px] py-[9px] px-[13px] flex gap-1 font-inter font-normal text-[17px]/[24px] text-[#FFFAF3] tracking-normal mt-6"
+            className="w-full h-[46px] py-[9px] px-[13px] flex gap-1 font-inter font-normal text-black text-[17px]/[24px] tracking-normal mt-6 disabled:text-black"
           >
             {isSubmitting ? "Processing..." : "Continue"}{" "}
             {!isSubmitting && <ArrowRight />}

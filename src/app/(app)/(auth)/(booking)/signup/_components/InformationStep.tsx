@@ -50,7 +50,6 @@ export function InformationStep({
 
   const handleSubmit = form.handleSubmit((data) => {
     updateFormData(data)
-    console.log("data", data)
     const inputData = {
       child_full_name: data?.childName,
       parent_full_name: data?.parentName,
