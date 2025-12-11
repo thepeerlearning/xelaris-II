@@ -15,6 +15,7 @@ const DataLoader = dynamic(() => import("@/components/lottie/loader"), {
 const NoData = dynamic(() => import("@/components/lottie/no-data"), {
   ssr: false,
 })
+
 export function PaymentInfo() {
   const { paymentMethod, methodLoading: loading }: any = useAppSelector(
     (state) => state.parent
