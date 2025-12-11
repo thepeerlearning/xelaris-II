@@ -266,6 +266,7 @@ export function SchedulingStep({
           fieldType="select"
           options={timezoneOptions}
           placeholder="Select timezone"
+          labelColor="text-black"
           required
         />
 
@@ -276,6 +277,7 @@ export function SchedulingStep({
           fieldType="select"
           options={childAgeOptions}
           placeholder="Select age range"
+          labelColor="text-black"
           required
         />
 
@@ -286,6 +288,7 @@ export function SchedulingStep({
           fieldType="select"
           options={classDurationOptions}
           placeholder="Select duration"
+          labelColor="text-black"
           required
         />
 
@@ -295,6 +298,7 @@ export function SchedulingStep({
           label="What Day Are You Available For Class"
           fieldType="select"
           options={dayOptions}
+          labelColor="text-black"
           placeholder="Select day"
           required
         />
@@ -303,7 +307,9 @@ export function SchedulingStep({
           name="availableTime"
           render={({ field, fieldState }) => (
             <FormItem>
-              <FormLabel>What time are you available for class?</FormLabel>
+              <FormLabel className="text-black">
+                What time are you available for class?
+              </FormLabel>
               <FormControl>
                 <TimeInput
                   field={field}
@@ -321,6 +327,7 @@ export function SchedulingStep({
               control={form.control}
               name="dayTwo"
               label=" What day are you available for the second class?"
+              labelColor="text-black"
               fieldType="select"
               options={dayOptions}
               placeholder="Select day"

@@ -22,6 +22,7 @@ interface SharedFormFieldProps<T extends FieldValues = FieldValues> {
   control: Control<T>
   name: FieldPath<T>
   label?: string
+  labelColor?: string
   containerClassName?: string
   errorClassName?: string
   showError?: boolean
@@ -62,6 +63,7 @@ type FormFieldProps<T extends FieldValues> =
 const FormField = <T extends FieldValues>({
   name,
   label,
+  labelColor,
   containerClassName = "",
   showError = true,
   className,
@@ -169,7 +171,8 @@ const FormField = <T extends FieldValues>({
           <label
             htmlFor={name}
             className={cn(
-              "text-sm font-medium text-white",
+              "text-sm font-medium ",
+              labelColor ? labelColor : "text-white",
               required && "after:content-['*'] after:ml-0.5 after:text-red-500"
             )}
           >

@@ -433,7 +433,7 @@ export function PersonalInfo({ profile }: ProfileProps) {
             disabled={isSubmitting || !isValid}
             className="w-full h-[46px] py-[9px] px-[13px] flex gap-1 font-inter font-normal text-black text-[17px]/[24px] tracking-normal mt-6 disabled:text-black"
           >
-            {isSubmitting ? "Processing..." : "Continue"}{" "}
+            {isSubmitting ? "Saving..." : "Save"}{" "}
             {!isSubmitting && <ArrowRight />}
           </Button>
         </form>

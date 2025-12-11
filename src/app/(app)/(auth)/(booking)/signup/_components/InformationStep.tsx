@@ -79,6 +79,7 @@ export function InformationStep({
           name="parentName"
           label="Parent full name"
           placeholder="Alexa Plex"
+          labelColor="text-black"
         />
 
         <FormField
@@ -86,6 +87,7 @@ export function InformationStep({
           name="childName"
           label="Child full name"
           placeholder="Ryan Plex"
+          labelColor="text-black"
         />
 
         <FormField
@@ -94,6 +96,7 @@ export function InformationStep({
           label="Email address"
           type="email"
           placeholder="alexaplex@gmail.co"
+          labelColor="text-black"
         />
 
         <FormField
@@ -103,6 +106,7 @@ export function InformationStep({
           label="Phone Number"
           defaultCountry="US"
           placeholder="+1 (415) 642-5372"
+          labelColor="text-black"
         />
 
         <FormField
@@ -111,6 +115,7 @@ export function InformationStep({
           label="Password"
           type="password"
           placeholder="••••••••••••"
+          labelColor="text-black"
         />
 
         <div className="text-sm text-background">

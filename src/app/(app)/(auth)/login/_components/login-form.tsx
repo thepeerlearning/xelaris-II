@@ -61,6 +61,7 @@ const LoginForm = () => {
           name="email"
           label="Email address"
           placeholder="alexaplex@gmail.co"
+          labelColor="text-black"
         />
 
         <div>
@@ -71,6 +72,7 @@ const LoginForm = () => {
             name="password"
             label="Password"
             placeholder="*******"
+            labelColor="text-black"
           />
           <Link
             href="/#"

@@ -60,6 +60,7 @@ export function AdminInformation() {
           name="email"
           label="Email address"
           placeholder="alexaplex@gmail.co"
+          labelColor="text-black"
         />
 
         <div>
@@ -70,6 +71,7 @@ export function AdminInformation() {
             name="password"
             label="Password"
             placeholder="*******"
+            labelColor="text-black"
           />
           <Link
             href="/#"
