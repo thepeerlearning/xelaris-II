@@ -17,7 +17,7 @@ export default function LandingRootLayoutWrapper({
   children: React.ReactNode
 }>) {
   return (
-    <div className="w-full flex flex-col min-h-screen bg-[#1D1F24]">
+    <div className="w-full flex flex-col min-h-screen bg-[#1D1F24] z-100">
       <Header />
       <div className="w-full h-[53px] flex justify-end items-center mt-[63px]">
         <div className="w-[185px] h-full flex justify-end items-end gap-1 px-[21px]">
