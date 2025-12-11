@@ -113,6 +113,7 @@ export function ChangePassword() {
                       id="currentPassword"
                       type={showCurrentPassword ? "text" : "password"}
                       placeholder="••••••••"
+                      autoComplete="new-password"
                       className={cn(
                         "pr-10",
                         fieldState.error &&
@@ -159,6 +160,7 @@ export function ChangePassword() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
+                      autoComplete="new-password"
                       className={cn(
                         "pr-10",
                         fieldState.error &&
@@ -207,6 +209,7 @@ export function ChangePassword() {
                       id="confirmPassword"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="••••••••"
+                      autoComplete="new-password"
                       className={cn(
                         "pr-10",
                         fieldState.error &&
