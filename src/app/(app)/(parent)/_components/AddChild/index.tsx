@@ -34,10 +34,11 @@ export function AddChild() {
   const prevStep = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 1))
   }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-[180px]">
+        <Button type="button" className="w-[180px]">
           Add another child <Plus />
         </Button>
       </DialogTrigger>

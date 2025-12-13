@@ -194,7 +194,9 @@ const CheckoutForm = ({
       </div>
 
       <div className="w-full relative flex flex-col gap-1">
-        <Label htmlFor="cardNumber">Card Number</Label>
+        <Label htmlFor="cardNumber" className="text-black">
+          Card Number
+        </Label>
         <div className="relative">
           <CardNumberElement
             id="cardNumber"
@@ -214,7 +216,9 @@ const CheckoutForm = ({
 
       <div className="grid grid-cols-2 gap-4">
         <div className=" w-full relative flex flex-col gap-1">
-          <Label htmlFor="expiry">Expiry</Label>
+          <Label htmlFor="expiry" className="text-black">
+            Expiry
+          </Label>
 
           <CardExpiryElement
             id="expiry"
@@ -224,7 +228,9 @@ const CheckoutForm = ({
         </div>
 
         <div className="w-full relative flex flex-col gap-1">
-          <Label htmlFor="cvc">CVC</Label>
+          <Label htmlFor="cvc" className="text-black">
+            CVC
+          </Label>
           <div className="relative">
             <CardCvcElement
               id="cvc"

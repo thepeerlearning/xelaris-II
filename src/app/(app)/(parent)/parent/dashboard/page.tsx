@@ -61,6 +61,7 @@ export default function ParentDashboard() {
           <div className="min-w-max flex gap-4 sm:gap-[32px] pb-1">
             {steps?.map((item, index) => (
               <button
+                type="button"
                 key={item}
                 className={`font-inter font-normal text-[14px]/[24px] -tracking-[0.6%] pb-2 transition-colors ${
                   activeTab === index + 1

@@ -58,6 +58,7 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit} className="space-y-6 w-full text-white">
         <FormField
           control={form.control}
+          type="email"
           name="email"
           label="Email address"
           placeholder="alexaplex@gmail.co"
@@ -88,7 +89,7 @@ const LoginForm = () => {
           </Button>
         </div>
 
-        <p className="text-sm text-center">
+        <p className="text-sm text-center text-black">
           Need to create an account? 
           <Link href="/signup" className="hover:underline">
             Sign up

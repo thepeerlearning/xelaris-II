@@ -344,7 +344,7 @@ export const getPaymentMethod = createAsyncThunk(
   "parent/getPaymentMethod",
   async (_, { rejectWithValue }: any) => {
     try {
-      const response = await api.get("parent-get-payment-method")
+      const response = await api.get("parent-payment-method")
       return response.data
     } catch (error: any) {
       let message =

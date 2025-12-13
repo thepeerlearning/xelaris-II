@@ -1,7 +1,7 @@
-import SignUpForm from "@/app/(app)/(auth)/(booking)/signup/_components";
+import SignUpForm from "@/app/(app)/(auth)/(booking)/signup/_components"
 
 const SignUpPage = () => {
-  return <SignUpForm />;
-};
+  return <SignUpForm />
+}
 
-export default SignUpPage;
+export default SignUpPage

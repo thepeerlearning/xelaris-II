@@ -12,9 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { addChild, updateUserData } from "@/lib/redux"
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks"
-import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ArrowRight } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -67,83 +65,40 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
     },
     mode: "onBlur",
   })
-  const { formState } = form
-  const { isValid } = formState
 
-  // Handle form submission
   function onSubmit(values: PersonalInfoValues) {
     const { password, childFullName } = values
+
     const inputData = {
       name: childFullName,
       username: childFullName.split(" ")?.[0]?.trim(),
-      password: password?.trim(),
+      password: password.trim(),
     }
+
     setIsSubmitting(true)
     dispatch(addChild({ inputData }))
       .unwrap()
       .then(() => {
         dispatch(updateUserData({ data: inputData }))
-        setIsSubmitting(false)
         nextStep()
       })
-      .catch(() => {
-        setIsSubmitting(false)
-      })
+      .finally(() => setIsSubmitting(false))
   }
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full md:w-[420px] grid grid-cols-1 gap-[10px]"
+        className=" md:w-[420px] grid grid-cols-1 space-y-6 w-full text-white"
       >
         <FormField
           control={form.control}
           name="childFullName"
-          render={({ field, fieldState }) => {
-            return (
-              <FormItem>
-                <FormLabel className="text-white" htmlFor="childFullName">
-                  Child Full Name
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    id="childFullName"
-                    placeholder="Jane Doe"
-                    className={cn(
-                      fieldState.error &&
-                        "border-[#E23353] focus-visible:ring-[#E23353]"
-                    )}
-                    {...field}
-                  />
-                </FormControl>
-
-                {fieldState.error && (
-                  <ErrorMessage>{fieldState.error.message}</ErrorMessage>
-                )}
-              </FormItem>
-            )
-          }}
-        />
-        <FormField
-          control={form.control}
-          name="password"
           render={({ field, fieldState }) => (
             <FormItem>
-              <FormLabel className="text-white" htmlFor="password">
-                Password
-              </FormLabel>
+              <FormLabel className="text-white">Child Full Name</FormLabel>
               <FormControl>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  className={cn(
-                    fieldState.error &&
-                      "border-[#E23353] focus-visible:ring-[#E23353]"
-                  )}
-                  {...field}
-                />
+                <Input placeholder="John Doe" {...field} />
               </FormControl>
               {fieldState.error && (
                 <ErrorMessage>{fieldState.error.message}</ErrorMessage>
@@ -151,14 +106,24 @@ export function PersonalInfoStep({ nextStep }: PersonalInfoStepProps) {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          disabled={isSubmitting || !isValid}
-          className="w-full h-[46px] py-[9px] px-[13px] flex gap-1 font-inter font-normal text-[17px]/[24px] text-[#FFFAF3] tracking-normal mt-8"
-        >
-          {isSubmitting ? "Processing..." : "Continue"}{" "}
-          {!isSubmitting && <ArrowRight />}
-        </Button>
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field, fieldState }) => (
+            <FormItem>
+              <FormLabel className="text-white">Password</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="*******" {...field} />
+              </FormControl>
+              {fieldState.error && (
+                <ErrorMessage>{fieldState.error.message}</ErrorMessage>
+              )}
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit">{isSubmitting ? "Saving..." : "Continue"}</Button>
       </form>
     </Form>
   )

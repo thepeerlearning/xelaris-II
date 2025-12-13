@@ -37,7 +37,7 @@ export function PaymentInfo() {
         <NoData />
       ) : (
         <>
-          {paymentMethod?.map((payment: any, index: number) => (
+          {paymentMethod?.data?.map((payment: any, index: number) => (
             <div
               className="w-full md:w-[568px] rounded-xl border border-solid border-[#EAECF0] p-6 shadow-[0px_1px_2px_0px_#1018280D] flex flex-col gap-6"
               key={index}
@@ -45,7 +45,11 @@ export function PaymentInfo() {
               <div className="w-full flex flex-col md:flex-row gap-6">
                 <div className="w-full relative flex flex-col gap-1">
                   <Label htmlFor="name">Name on card</Label>
-                  <Input id="name" value={payment?.name ?? ""} disabled />
+                  <Input
+                    id="name"
+                    value={payment?.billing_details?.name ?? ""}
+                    disabled
+                  />
                 </div>
                 <div className="w-[158px]">
                   <Label htmlFor="name">Expiry</Label>
